@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from .users import app_usuario
 from config import Config
+from flask_login import login_required
     
 typelouder = Flask(__name__, static_folder=Config.STATIC_FOLDER, template_folder=Config.TEMPLATE_FOLDER)
 
@@ -16,6 +17,7 @@ typelouder.config['MAIL_PASSWORD'] = Config.CREDENCIALES_EMAIL['email_host_passw
 typelouder.register_blueprint(app_usuario)
 
 @typelouder.route('/')
+@login_required
 def home():
     return render_template('home/index.html')
 

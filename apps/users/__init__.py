@@ -72,5 +72,47 @@ def confirmar_email(token):
     conn.close_connection()
     return redirect(url_for('user.login'))
 
-def reset_password():
-    pass
+@app_usuario.route('/password_reset',methods=['GET','POST'])
+def password_reset():
+    if request.method == 'POST':
+        email= request.form['email']
+        query= '''SELECT id,username, nombre, apellido FROM usuarios where email=%s'''
+        params=(email,)
+        usuario=conn.fetch_one(query,params)
+        token= str(uuid.uuid4()) #genera un token unico
+        url=str(request.url_root)+'nuevo_password/'+str(token) #url para la activacion de la cuenta
+        sql= '''UPDATE usuarios SET token=%s where id=%s'''
+        params_sql=(token,usuario[0],)
+        conn.execute_query(sql,params_sql)
+        data={
+            'url':url,
+            'username':usuario[1],
+            'nombre':usuario[2],
+            'apellido':usuario[3]}
+        mensaje=Message('Recuperar Password',sender=Config.CREDENCIALES_EMAIL['email_host_user'], recipients=[email]) #configura mail
+        mensaje.html= render_template('email/recuperar.html',context=data) #renderiza template del mail
+        MAIL.send(mensaje)
+        conn.close_connection()
+        return redirect(url_for('user.login'))
+    return render_template('usuarios/password_reset.html')
+        
+        
+@app_usuario.route('/nuevo_password/<token>',methods=['GET','POST'])
+def nuevo_password(token):        
+    if request.method == 'POST':
+        password= request.form['password']
+        password1= request.form['password1']
+        #encripta password
+        if password==password1:
+            password_hash= generate_password_hash(password)
+        query= '''SELECT * FROM usuarios WHERE token=%s'''
+        params=(token,)
+        print(token,'#########################################')
+        usuario=conn.fetch_one(query,params)
+        query= '''UPDATE usuarios SET password=%s, token=null WHERE id=%s'''
+        params=(password_hash, usuario[0],)
+        conn.execute_query(query,params)
+        conn.close_connection()
+        return redirect(url_for('user.login'))
+    return render_template('usuarios/nuevo_password.html', token=token)    
+    
