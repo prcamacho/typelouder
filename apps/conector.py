@@ -58,6 +58,7 @@ class DatabaseConnection:
                     activo TINYINT NOT NULL DEFAULT(0),
                     token VARCHAR(100)  
                     )'''
+                    
         try:
             cursor = cls.get_connection().cursor()
             cursor.execute(crear_database)
