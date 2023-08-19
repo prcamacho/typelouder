@@ -49,7 +49,7 @@ class DatabaseConnection:
         crear_database = "CREATE DATABASE IF NOT EXISTS %s" %Config.CREDENCIALES_DB["database"]
         tabla_insignias='''CREATE TABLE IF NOT EXISTS insignias(
                     id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
-                    nombre VARCHAR (100) NOT NULL,
+                    nombre VARCHAR (100) UNIQUE NOT NULL,
                     imagen VARCHAR (255) NOT NULL
                     )'''           
         tabla_usuarios='''CREATE TABLE IF NOT EXISTS usuarios(
