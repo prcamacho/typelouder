@@ -7,9 +7,12 @@ MAIL= Mail()
 login_manager= LoginManager()
 
 class User(UserMixin):
-    def __init__(self, user_id,apellido):
+    def __init__(self, user_id,username,nombre,apellido,email):
         self.id=user_id
+        self.username=username
+        self.nombre=nombre
         self.apellido=apellido
+        self.email=email
         
 @login_manager.user_loader
 def load_user(user_id):
@@ -18,6 +21,6 @@ def load_user(user_id):
     usuario = conn.fetch_one(query,(user_id,))
     conn.close_connection()
     if usuario:
-        user = User(usuario[0],usuario[3])
+        user = User(usuario[0],usuario[1],usuario[2],usuario[3],usuario[4])
         return user
     return None        

@@ -5,7 +5,7 @@ import uuid
 from flask_mail import Message
 from apps.conector import DatabaseConnection as conn
 from apps.extensiones import MAIL, load_user
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
 app_usuario= Blueprint('user', __name__) 
 
@@ -39,7 +39,8 @@ def register():
         params= (username,nombre,apellido,email,password_hash,fecha_nacimiento,str(token),)
         conn.execute_query(query,params)
         conn.close_connection()
-        return redirect(url_for('user.login'))
+        return 'ok'
+        #return redirect(url_for('user.login'))
     return render_template('usuarios/registro.html')
 
 
@@ -52,8 +53,10 @@ def login():
         query='SELECT * FROM usuarios where email=%s'
         params=(email,)
         result=conn.fetch_one(query,params)
+        #cambiar al if comentado para utilizar las password hash
         if result and check_password_hash(result[5], password) and result[7]:
-            user=load_user(result[0],result[3])
+        #if result and result[5] == password and result[7]:    
+            user=load_user(result[0])
             login_user(user)
             return redirect('/')
         else:
@@ -150,4 +153,40 @@ def nuevo_password(token):
         conn.close_connection()
         return redirect(url_for('user.login'))
     return render_template('usuarios/nuevo_password.html', token=token)    
+    
+@app_usuario.route('/editar_usuario', methods=['GET','POST'])
+def editar_usuario():
+    user_id= current_user.id
+    query='''SELECT * FROM usuarios WHERE id=%s'''
+    params=(user_id,)
+    usuario=conn.fetch_one(query,params)
+    if request.method == 'POST':
+        username= request.form['username']
+        nombre= request.form['nombre']
+        apellido= request.form['apellido']
+        sql='''UPDATE usuarios SET username=%s, nombre=%s, apellido=%s WHERE id=%s'''
+        prms=(username,nombre,apellido,usuario[0],)
+        conn.execute_query(sql,prms)
+        return redirect(url_for('home'))
+    return render_template('usuarios/editar_usuario.html')
+
+@app_usuario.route('/editar_password',methods=['GET','POST'])
+def editar_password():
+    user_id= current_user.id
+    query='''SELECT * FROM usuarios WHERE id=%s'''
+    params=(user_id,)
+    usuario=conn.fetch_one(query,params)
+    if request.method == 'POST':
+        pass1= request.form['password1']
+        pass2= request.form['password2']
+        pass3= request.form['password3']
+        if check_password_hash(usuario[5],pass1):
+            if pass2==pass3:
+                sql='''UPDATE usuarios set password=%s WHERE id=%s'''
+                prms=(generate_password_hash(pass2),usuario[0],)
+                conn.execute_query(sql,prms)
+                return redirect(url_for('home'))
+            return render_template('usuarios/editar_password.html',error_message='Las contraseñas no coincien')
+        return render_template('usuarios/editar_password.html',error_message='Contraseña actual incorrecta ')
+    return render_template('usuarios/editar_password.html')
     

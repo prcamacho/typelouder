@@ -62,7 +62,7 @@ class DatabaseConnection:
                     fecha_nacimiento DATE NOT NULL,
                     activo TINYINT NOT NULL DEFAULT(0),
                     token VARCHAR(100),
-                    id_insignia INT NOT NULL,
+                    id_insignia INT,
                     FOREIGN KEY (id_insignia) REFERENCES insignias(id)  
                     )'''
         tabla_categorias='''CREATE TABLE IF NOT EXISTS categorias(
