@@ -39,6 +39,7 @@ class User(UserMixin):
                 nombre = result[2], 
                 apellido = result[3],
                 email = result[4],
+                password= result[5],
                 fecha_nacimiento = result[6],
                 id_insignia = result[8]
                 )
@@ -73,6 +74,7 @@ class User(UserMixin):
             user_list=[]
             for result in results:
                 user_list.append(User(id = result[0], username = result[1], nombre = result[2], apellido = result[3],email = result[4],fecha_nacimiento = result[6],id_insignia = result[8]))
+            return user_list    
         else:
             return None 
         
@@ -82,6 +84,20 @@ class User(UserMixin):
         params=(user.username,user.nombre,user.apellido,user.token,user.id,)
         conn.execute_query(query,params)   
         conn.close_connection()
+    
+    @classmethod
+    def reset_user_pass(cls,user):
+        query= '''UPDATE usuarios SET password=%s, token=null WHERE token=%s'''
+        params= (user.password,user.token,)
+        conn.execute_query(query,params)
+        conn.close_connection
+        
+    @classmethod    
+    def edit_password(cls, user):
+        query= '''UPDATE usuarios SET password=%s WHERE id=%s'''
+        params= (user.password,user.id,)
+        conn.execute_query(query,params)
+        conn.close_connection
     
     @classmethod
     def activate_user(cls, user):
