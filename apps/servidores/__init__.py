@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_required, current_user
-from apps.conector import DatabaseConnection as conn
+from apps.database import DatabaseConnection as conn
 import uuid
 
 app_servidor= Blueprint('servidor', __name__)

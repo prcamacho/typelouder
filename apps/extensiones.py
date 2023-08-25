@@ -1,18 +1,11 @@
 from flask_mail import Mail
 from flask_login import LoginManager, UserMixin
-from .conector import DatabaseConnection as conn
+from .database import DatabaseConnection as conn
+from .users.models import User
 
 MAIL= Mail()
 
 login_manager= LoginManager()
-
-class User(UserMixin):
-    def __init__(self, user_id,username,nombre,apellido,email):
-        self.id=user_id
-        self.username=username
-        self.nombre=nombre
-        self.apellido=apellido
-        self.email=email
         
 @login_manager.user_loader
 def load_user(user_id):

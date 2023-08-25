@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from .users import app_usuario
+from apps.users.routes import app_usuario
 from config import Config
 from flask_login import login_required
     
