@@ -32,6 +32,7 @@ class User(UserMixin):
         query= '''SELECT * FROM usuarios WHERE id = %s'''
         params = (user.id,)
         result = conn.fetch_one(query, params) 
+        conn.close_connection()
         if result is not None:
             return User(
                 id = result[0], 
@@ -43,14 +44,14 @@ class User(UserMixin):
                 fecha_nacimiento = result[6],
                 id_insignia = result[8]
                 )
-        else:
-            return None    
+        return None    
     
     @classmethod
     def get_user_email(cls, user):
         query= '''SELECT * FROM usuarios WHERE email = %s'''
         params = (user.email,)
         result = conn.fetch_one(query, params) 
+        conn.close_connection()
         if result is not None:
             return User(
                 id = result[0], 
@@ -63,20 +64,19 @@ class User(UserMixin):
                 activo= result[7],
                 id_insignia = result[8]
                 )
-        else:
-            return None 
+        return None 
     
     @classmethod
     def get_users(cls):
         query= '''SELECT * FROM usuarios'''
         results = conn.fetch_all(query) 
+        conn.close_connection()
         if results is not None:
             user_list=[]
             for result in results:
                 user_list.append(User(id = result[0], username = result[1], nombre = result[2], apellido = result[3],email = result[4],fecha_nacimiento = result[6],id_insignia = result[8]))
             return user_list    
-        else:
-            return None 
+        return None 
         
     @classmethod
     def update_user(cls, user):
@@ -108,7 +108,7 @@ class User(UserMixin):
         
     @classmethod
     def deactivate_user(cls, user):
-        query= '''UPDATE usuarios set activo=0 WHERE id=%s'''
-        params=(user.id,)
+        query= '''UPDATE usuarios set activo=0, token=%s WHERE id=%s'''
+        params=(user.token,user.id,)
         conn.execute_query(query,params)
         conn.close_connection()

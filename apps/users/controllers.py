@@ -34,7 +34,7 @@ class UserController:
         mensaje.html= render_template('email/confirmar_mail.html',context=data) 
         MAIL.send(mensaje)
         return jsonify({'message':'Usuario registrado con exito'}, 200)
-    
+
     @classmethod
     def login(cls):
         email = request.form['email']
@@ -44,14 +44,13 @@ class UserController:
             user=load_user(user.id)
             login_user(user)
             return jsonify({'message':'Login exitoso'}, 200)
-    
+
     @classmethod        
     def confirmar_email(cls,token):
         user= User(token=token)
-        print(type(user.token))
         User.activate_user(user)   
         return jsonify({'message':'Usuario activado con exito'}, 200) 
-     
+
     @classmethod
     def logout(cls):
         logout_user()
@@ -107,6 +106,29 @@ class UserController:
                 return jsonify({'message':'Password editado correctamente'}) 
             return jsonify({'message':'Los passwords no coinciden'})   
         return jsonify({'message':'Password actual incorrecto'})    
+    
+    @classmethod
+    def desactivar_cuenta(cls):
+        token= str(uuid.uuid4()) #genera un token unico
+        user=User(id=current_user.id,username=current_user.username,nombre=current_user.nombre,apellido=current_user.apellido,email=current_user.email, token=token)
+        url=str(request.url_root)+'activar_cuenta/'+str(token)
+        User.update_user(user)
+        data={
+            'url':url,
+            'username':user.username,
+            'nombre':user.nombre,
+            'apellido':user.apellido}
+        mensaje=Message('Regresa pronto!!!',sender=Config.CREDENCIALES_EMAIL['email_host_user'], recipients=[user.email]) #configura mail
+        mensaje.html= render_template('email/activar_cuenta.html',context=data) #renderiza template del mail
+        User.deactivate_user(user)
+        MAIL.send(mensaje)
+        return jsonify({'message':'Cuenta desactivada!'})
+    
+    @classmethod
+    def activar_cuenta(cls, token):
+        user= User(token=token)
+        User.activate_user(user)   
+        return jsonify({'message':'Usuario activado con exito'}, 200) 
     
     @classmethod
     def usuario(cls,id):
