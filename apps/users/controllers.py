@@ -3,8 +3,6 @@ from config import Config
 from .models import User
 import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager
-from flask_mail import Mail
 from apps.extensiones import MAIL, load_user
 from flask_mail import Message
 from flask_login import login_user, logout_user, current_user

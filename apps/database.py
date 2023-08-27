@@ -73,8 +73,8 @@ class DatabaseConnection:
         tabla_servidores='''CREATE TABLE IF NOT EXISTS servidores(
                     id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
                     nombre VARCHAR (100) UNIQUE NOT NULL,
-                    imagen VARCHAR (255) NOT NULL,
                     descripcion TEXT NOT NULL,
+                    imagen VARCHAR (255) NOT NULL,
                     fecha_creacion TIMESTAMP DEFAULT NOW(),
                     privado TINYINT NOT NULL DEFAULT(0),
                     password VARCHAR(255),
