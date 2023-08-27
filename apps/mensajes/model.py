@@ -59,8 +59,34 @@ class Mensaje:
         conn.close_connection()
     
     @classmethod
-    def delete_servidor(cls,mensaje):
+    def delete_mensaje(cls,mensaje):
+        query='''DELETE FROM reacciones WHERE id_mensaje=%s'''
+        params= (mensaje.id,)
+        conn.execute_query(query, params)
         query='''DELETE FROM mensajes WHERE id=%s AND id_usuario=%s'''
         params= (mensaje.id, mensaje.id_usuario,)
         conn.execute_query(query, params)
         conn.close_connection()
+        
+        
+class Reaccion:
+    def __init__(self, id=None, id_menasje=None, id_usuario=None, reaccion=None):
+        self.id= id
+        self.id_mensaje= id_menasje
+        self.id_usuario= id_usuario
+        self.reaccion= reaccion
+    
+    @classmethod    
+    def reaccionar(cls, reaccion, mensaje):
+        query= '''INSERT INTO reacciones (reaccion, id_mensaje, id_usuario) 
+                VALUES (%s,%s,%s)'''
+        params= (reaccion.reaccion, mensaje.id, mensaje.id_usuario,)
+        conn.execute_query(query,params)                   
+        conn.close_connection() 
+        
+    @classmethod
+    def update_reaccion(cls, reaccion):
+        query= '''UPDATE reacciones SET reaccion= %s WHERE id=%s'''
+        params= (reaccion.reaccion, reaccion.id,)
+        conn.execute_query(query,params)
+        conn.close_connection()    

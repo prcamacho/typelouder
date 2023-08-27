@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from apps.users.routes import app_usuario
 from apps.servidores.route import app_servidor
 from apps.mensajes.route import app_mensaje
+from apps.canales.route import app_canal
 from config import Config
 from flask_login import login_required
     
@@ -19,6 +20,7 @@ typelouder.config['MAIL_PASSWORD'] = Config.CREDENCIALES_EMAIL['email_host_passw
 typelouder.register_blueprint(app_usuario)
 typelouder.register_blueprint(app_servidor)
 typelouder.register_blueprint(app_mensaje)
+typelouder.register_blueprint(app_canal)
 
 @typelouder.route('/')
 @login_required
