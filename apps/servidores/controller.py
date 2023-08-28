@@ -78,5 +78,10 @@ class ServidorController:
         Servidor.update_servidor(servidor)
         return jsonify({'message':'Servidor editado con exito'}, 200)
 
-        
+    @classmethod
+    def delete_servidor(cls, token):
+        #id_usuario_creador=current_user.id 
+        id_usuario_creador= 1
+        Servidor.delete_servidor(Servidor(id_usuario_creador=id_usuario_creador, token=token))
+        return jsonify({'message':'Servidor eliminado'})
             

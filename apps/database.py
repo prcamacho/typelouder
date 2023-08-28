@@ -81,7 +81,7 @@ class DatabaseConnection:
                     token VARCHAR(100),
                     id_usuario_creador INT NOT NULL,
                     id_categoria INT NOT NULL,
-                    FOREIGN KEY (id_usuario_creador) REFERENCES usuarios(id),
+                    FOREIGN KEY (id_usuario_creador) REFERENCES usuarios(id) ON DELETE CASCADE,
                     FOREIGN KEY (id_categoria) REFERENCES categorias(id)  
                     )'''
         tabla_miembros='''CREATE TABLE IF NOT EXISTS miembros(
@@ -89,15 +89,15 @@ class DatabaseConnection:
                     id_usuario INT NOT NULL,
                     id_servidor INT NOT NULL,
                     fecha_union TIMESTAMP DEFAULT NOW(),
-                    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
-                    FOREIGN KEY (id_servidor) REFERENCES servidores(id)  
+                    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE,
+                    FOREIGN KEY (id_servidor) REFERENCES servidores(id) ON DELETE CASCADE  
                     )'''
         tabla_canales='''CREATE TABLE IF NOT EXISTS canales(
                     id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
                     nombre VARCHAR (100) NOT NULL,
                     id_servidor INT NOT NULL,
                     fecha_creacion TIMESTAMP DEFAULT NOW(),
-                    FOREIGN KEY (id_servidor) REFERENCES servidores(id)  
+                    FOREIGN KEY (id_servidor) REFERENCES servidores(id) ON DELETE CASCADE  
                     )'''
         # tabla mensaje queda a revision, para agregar contenido multimedia
         tabla_mensajes='''CREATE TABLE IF NOT EXISTS mensajes(
@@ -106,16 +106,16 @@ class DatabaseConnection:
                     id_usuario INT NOT NULL,
                     mensaje TEXT NOT NULL,
                     fecha_mensaje TIMESTAMP DEFAULT NOW(),
-                    FOREIGN KEY (id_canal) REFERENCES canales(id),
-                    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)  
+                    FOREIGN KEY (id_canal) REFERENCES canales(id) ON DELETE CASCADE,
+                    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE 
                     )'''
         tabla_reacciones='''CREATE TABLE IF NOT EXISTS reacciones(
                     id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
                     id_mensaje INT NOT NULL,
                     id_usuario INT NOT NULL,
                     reaccion TINYINT DEFAULT(NULL),
-                    FOREIGN KEY (id_mensaje) REFERENCES mensajes(id),
-                    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)  
+                    FOREIGN KEY (id_mensaje) REFERENCES mensajes(id) ON DELETE CASCADE,
+                    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE 
                     )'''
                     
         try:

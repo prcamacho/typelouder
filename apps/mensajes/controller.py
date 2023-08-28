@@ -63,7 +63,10 @@ class MensajeController:
     def delete_mensaje(cls, id):
         mensaje= Mensaje.get_mensaje(Mensaje(id=id))
         #mensaje.id_usuario= current_user.id
-        if mensaje and mensaje.id_usuario == current_user.id:
+        id_usuario=2
+        mensaje.id_usuario=id_usuario
+        #if mensaje and mensaje.id_usuario == current_user.id:
+        if mensaje:
             Mensaje.delete_mensaje(mensaje)
             return jsonify({'message':'Mensaje eliminado'}, 200)
         return jsonify({'message':'No es posible eliminar el mensaje'})

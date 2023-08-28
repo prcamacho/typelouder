@@ -60,9 +60,6 @@ class Mensaje:
     
     @classmethod
     def delete_mensaje(cls,mensaje):
-        query='''DELETE FROM reacciones WHERE id_mensaje=%s'''
-        params= (mensaje.id,)
-        conn.execute_query(query, params)
         query='''DELETE FROM mensajes WHERE id=%s AND id_usuario=%s'''
         params= (mensaje.id, mensaje.id_usuario,)
         conn.execute_query(query, params)

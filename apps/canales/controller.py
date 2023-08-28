@@ -5,7 +5,7 @@ from apps.canales.model import Canal
 from werkzeug.security import generate_password_hash, check_password_hash
 from apps.servidores.model import Servidor
 
-class MensajeController:
+class CanalController:
     @classmethod
     def create_canal(cls, token_servidor):
         nombre= request.form['nombre']
@@ -56,5 +56,10 @@ class MensajeController:
     @classmethod
     def update_canal(cls, id):
         nombre= request.form['nombre']
-        Canal.update_canal(Canal(nombre=nombre))
+        Canal.update_canal(Canal(id=id, nombre=nombre))
         return jsonify({'message':'Canal editado con exito'}, 200)
+    
+    @classmethod
+    def delete_canal(cls, id):
+        CanalController.delete_canal(Canal(id=id))
+        return jsonify({'message':'Canal eliminado'})

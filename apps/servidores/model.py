@@ -62,4 +62,7 @@ class Servidor:
     
     @classmethod
     def delete_servidor(cls,servidor):
-        pass
+        query= '''DELETE FROM servidores WHERE token=%s AND id_usuario_creador=%s'''
+        params= (servidor.token, servidor.id_usuario_creador,)
+        conn.execute_query(query,params)
+        conn.close_connection()

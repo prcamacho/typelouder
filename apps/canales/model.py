@@ -52,14 +52,14 @@ class Canal:
     
     @classmethod
     def update_canal(cls,canal):
-        query='''UPDATE mensajes SET nombre=%s WHERE id=%s'''
-        params=(canal.id,)
+        query='''UPDATE canales SET nombre=%s WHERE id=%s'''
+        params=(canal.nombre, canal.id,)
         conn.execute_query(query,params)
         conn.close_connection()
     
     @classmethod
     def delete_canal(cls,canal):
-        query='''DELETE FROM canal WHERE id=%s'''
+        query='''DELETE FROM canales WHERE id=%s'''
         params= (canal.id, )
         conn.execute_query(query, params)
         conn.close_connection()    
