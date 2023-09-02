@@ -1,5 +1,5 @@
 from flask import Blueprint
-from apps.mensajes.controller import MensajeController
+from api.mensajes.controller import MensajeController
 
 app_mensaje= Blueprint('mensaje', __name__)
 

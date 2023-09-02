@@ -1,7 +1,7 @@
 from flask import request, jsonify
 import uuid
 from flask_login import current_user
-from apps.servidores.model import Servidor
+from api.servidores.model import Servidor
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class ServidorController:

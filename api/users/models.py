@@ -1,5 +1,5 @@
 from flask_login import UserMixin
-from apps.database import DatabaseConnection as conn
+from api.database import DatabaseConnection as conn
 
 class User(UserMixin):
     def __init__(self,id=None,username=None,nombre=None,apellido=None,email=None,password=None,fecha_nacimiento=None,activo=False,token=None,id_insignia=None):

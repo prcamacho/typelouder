@@ -1,12 +1,14 @@
 from flask import Flask, render_template
-from apps.users.routes import app_usuario
-from apps.servidores.route import app_servidor
-from apps.mensajes.route import app_mensaje
-from apps.canales.route import app_canal
+from api.users.routes import app_usuario
+from api.servidores.route import app_servidor
+from api.mensajes.route import app_mensaje
+from api.canales.route import app_canal
 from config import Config
 from flask_login import login_required
+from flask_cors import CORS
     
 typelouder = Flask(__name__, static_folder=Config.STATIC_FOLDER, template_folder=Config.TEMPLATE_FOLDER)
+CORS(typelouder, supports_credentials=True)
 
 typelouder.secret_key = Config.SECRET_KEY
 

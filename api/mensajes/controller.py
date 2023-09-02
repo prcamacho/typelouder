@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from flask_login import current_user
-from apps.mensajes.model import Mensaje, Reaccion
-from apps.canales.model import Canal
+from api.mensajes.model import Mensaje, Reaccion
+from api.canales.model import Canal
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class MensajeController:

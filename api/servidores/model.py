@@ -1,4 +1,4 @@
-from apps.database import DatabaseConnection as conn
+from api.database import DatabaseConnection as conn
 
 class Servidor:
     def __init__(self,id=None, nombre=None, descripcion=None, imagen=None, fecha_creacion=None, 
@@ -40,7 +40,7 @@ class Servidor:
     @classmethod
     def get_servidores(cls):
         query='''SELECT * FROM servidores'''
-        results=conn.fetch_all(query)
+        results = conn.fetch_all(query)
         conn.close_connection()
         if results is not None:
             lista_servidores=[]

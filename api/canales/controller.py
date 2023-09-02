@@ -1,9 +1,9 @@
 from flask import request, jsonify
 from flask_login import current_user
-from apps.mensajes.model import Mensaje
-from apps.canales.model import Canal
+from api.mensajes.model import Mensaje
+from api.canales.model import Canal
 from werkzeug.security import generate_password_hash, check_password_hash
-from apps.servidores.model import Servidor
+from api.servidores.model import Servidor
 
 class CanalController:
     @classmethod

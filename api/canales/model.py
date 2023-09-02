@@ -1,4 +1,4 @@
-from apps.database import DatabaseConnection as conn
+from api.database import DatabaseConnection as conn
 
 class Canal:
     def __init__(self, id=None, nombre=None, id_servidor=None, fecha_creacion=None):
