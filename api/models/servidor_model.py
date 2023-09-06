@@ -1,5 +1,4 @@
 from api.database import DatabaseConnection as conn
-
 class Servidor:
     def __init__(self,id=None, nombre=None, descripcion=None, imagen=None, fecha_creacion=None, 
                 privado=None, password=None, token=None, id_usuario_creador=None, id_categoria=None):
@@ -66,3 +65,12 @@ class Servidor:
         params= (servidor.token, servidor.id_usuario_creador,)
         conn.execute_query(query,params)
         conn.close_connection()
+        
+
+
+
+
+
+
+
+    

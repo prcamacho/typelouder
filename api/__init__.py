@@ -1,8 +1,8 @@
 from flask import Flask, render_template
-from api.users.routes import app_usuario
-from api.servidores.route import app_servidor
-from api.mensajes.route import app_mensaje
-from api.canales.route import app_canal
+from api.routes.user_route import app_usuario
+from api.routes.servidor_route import app_servidor
+from api.routes.mensaje_route import app_mensaje
+from api.routes.canal_route import app_canal
 from config import Config
 from flask_login import login_required
 from flask_cors import CORS

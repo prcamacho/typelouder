@@ -1,5 +1,5 @@
 from flask import Blueprint
-from api.servidores.controller import ServidorController
+from api.controllers.servidor_controller import ServidorController
 
 app_servidor= Blueprint('servidor', __name__)
 

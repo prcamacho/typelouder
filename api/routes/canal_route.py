@@ -1,5 +1,5 @@
 from flask import Blueprint
-from api.canales.controller import CanalController
+from api.controllers.canal_controller import CanalController
 
 app_canal= Blueprint('canal', __name__)
 

@@ -1,6 +1,6 @@
 from flask import request, render_template, jsonify
 from config import Config 
-from .models import User
+from ..models.user_model import User
 import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 from api.extensiones import MAIL, load_user
@@ -38,7 +38,8 @@ class UserController:
         email = request.form['email']
         password = request.form['password']
         user= User.get_user_email(User(email=email))
-        if user and check_password_hash(user.password, password) and user.activo:
+        #if user and check_password_hash(user.password, password) and user.activo:
+        if user and check_password_hash(user.password, password):
             user=load_user(user.id)
             login_user(user)
             return jsonify({'message':'Login exitoso'}, 200)
@@ -157,3 +158,4 @@ class UserController:
             lista.append(dic)
         return jsonify(lista)    
             
+         
