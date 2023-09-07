@@ -1,18 +1,39 @@
 from flask_login import UserMixin
 from api.database import DatabaseConnection as conn
+from api.models.insignia_model import Insignia
 
 class User(UserMixin):
-    def __init__(self,id=None,username=None,nombre=None,apellido=None,email=None,password=None,fecha_nacimiento=None,activo=False,token=None,id_insignia=None):
-        self.id=id
-        self.username=username
-        self.nombre=nombre
-        self.apellido=apellido
-        self.email=email
-        self.password=password
-        self.fecha_nacimiento=fecha_nacimiento
-        self.activo=activo
-        self.token=token
-        self.id_insignia=id_insignia
+    def __init__(self, **kwargs):
+        self.id = kwargs.get('id',None)
+        self.username = kwargs.get('username',None)
+        self.nombre = kwargs.get('nombre',None)
+        self.apellido = kwargs.get('apellido',None)
+        self.email = kwargs.get('email',None)
+        self.password = kwargs.get('password',None)
+        self.fecha_nacimiento = kwargs.get('fecha_nacimiento',None)
+        self.activo = kwargs.get('activo',None)
+        self.token = kwargs.get('token',None)
+        self.id_insignia = kwargs.get('id_insignia',None)
+    
+    def serialize(self):
+        return {
+            'id':self.id,
+            'username':self.username,
+            'nombre':self.nombre,
+            'apellido':self.apellido,
+            'email':self.email,
+            'fecha_nacimiento':self.fecha_nacimiento,
+            'activo':self.activo,
+            'insignia': Insignia.get_insignia(Insignia(id=self.id_insignia)).serialize()
+        }
+    
+    def serialize_basico(self):
+        return {
+            'id':self.id,
+            'username':self.username,
+            'nombre':self.nombre,
+            'apellido':self.apellido
+        }    
     
     @classmethod    
     def create_user(cls, user):
@@ -37,7 +58,8 @@ class User(UserMixin):
                 email = result[4],
                 password= result[5],
                 fecha_nacimiento = result[6],
-                id_insignia = result[8]
+                activo = result[7],
+                id_insignia = result[9]
                 )
         return None    
     
@@ -57,7 +79,7 @@ class User(UserMixin):
                 password= result[5],
                 fecha_nacimiento = result[6],
                 activo= result[7],
-                id_insignia = result[8]
+                id_insignia = result[9]
                 )
         return None 
     
@@ -69,7 +91,15 @@ class User(UserMixin):
         if results is not None:
             user_list=[]
             for result in results:
-                user_list.append(User(id = result[0], username = result[1], nombre = result[2], apellido = result[3],email = result[4],fecha_nacimiento = result[6],id_insignia = result[8]))
+                user_list.append(User(id = result[0], 
+                                      username = result[1], 
+                                      nombre = result[2], 
+                                      apellido = result[3],
+                                      email = result[4],
+                                      password= result[5],
+                                      fecha_nacimiento = result[6],
+                                      activo= result[7],
+                                      id_insignia = result[9]))
             return user_list    
         return None 
         

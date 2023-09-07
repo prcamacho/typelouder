@@ -1,7 +1,7 @@
 from flask import Blueprint
 from ..controllers.user_controller import UserController
 
-app_usuario= Blueprint('user', __name__) 
+app_usuario= Blueprint('user', __name__, url_prefix='/users') 
 
 app_usuario.route('/registro', methods=['POST'])(UserController.create_user)
 app_usuario.route('/confirmar_email/<token>', methods=['GET'])(UserController.confirmar_email)
@@ -13,5 +13,5 @@ app_usuario.route('/editar_usuario', methods=['PUT'])(UserController.edit_user)
 app_usuario.route('/editar_password',methods=['PUT'])(UserController.edit_password)
 app_usuario.route('/desactivar_cuenta',methods=['PUT'])(UserController.desactivar_cuenta)
 app_usuario.route('/activar_cuenta',methods=['PUT'])(UserController.activar_cuenta)
-app_usuario.route('/usuarios/<int:id>',methods=['GET'])(UserController.usuario)
-app_usuario.route('/usuarios',methods=['GET'])(UserController.lista_usuarios)
+app_usuario.route('/<int:id>/',methods=['GET'])(UserController.usuario)
+app_usuario.route('/',methods=['GET'])(UserController.lista_usuarios)

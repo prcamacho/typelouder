@@ -16,13 +16,10 @@ class CanalController:
     @classmethod
     def get_canal(cls, id):
         canal= Canal.get_canal(Canal(id=id))
-        dic= {
-            'id':canal.id,
-            'nombre':canal.nombre,
-            'id_servidor':canal.id_servidor,
-            'fecha_creacion':canal.fecha_creacion
-        }
-        return jsonify(dic, 200)
+        if canal:
+            dic= canal.serialize()
+            return jsonify(dic, 200)
+        return jsonify({'message':'No se ha encontrado canal'}, 401)
     
     @classmethod
     def get_canales_servidor(cls, token_servidor):
@@ -30,13 +27,7 @@ class CanalController:
         canales= Canal.get_canal_servidor(Canal(id_servidor=servidor.id))
         lista=[]
         for canal in canales:
-            dic= {
-                'id':canal.id,
-                'nombre':canal.nombre,
-                'id_servidor':canal.id_servidor,
-                'fecha_creacion':canal.fecha_creacion
-            }
-            lista.append(dic)
+            lista.append(canal.serialize())
         return jsonify(lista, 200)
     
     @classmethod
@@ -44,13 +35,7 @@ class CanalController:
         canales= Canal.get_canales()
         lista=[]
         for canal in canales:
-            dic= {
-                'id':canal.id,
-                'nombre':canal.nombre,
-                'id_servidor':canal.id_servidor,
-                'fecha_creacion':canal.fecha_creacion
-            }
-            lista.append(dic)
+            lista.append(canal.serialize())
         return jsonify(lista, 200)
     
     @classmethod

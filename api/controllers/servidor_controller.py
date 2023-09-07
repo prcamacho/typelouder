@@ -18,7 +18,7 @@ class ServidorController:
         #id_usuario_creador= current_user.id
         id_usuario_creador= 1
         token=str(uuid.uuid4())  
-        filename = Imagen.guardar_imagen(imagen,request,Config.MEDIA_SERVIDOR)
+        filename = Imagen.guardar_imagen(imagen,request,Config.MEDIA_SERVIDOR,(250,250))
         if privado:
             password= generate_password_hash(request.form['password'])
         servidor= Servidor(nombre=nombre, descripcion=descripcion,imagen=filename,privado=privado,
@@ -32,39 +32,15 @@ class ServidorController:
         lista=[]
         for servidor in servidores:
             if not servidor.privado:
-                dic= {
-                    'id':servidor.id,
-                    'nombre':servidor.nombre,
-                    'descripcion':servidor.descripcion,
-                    'imagen':servidor.imagen,
-                    'fecha_creacion':servidor.fecha_creacion,
-                    'privado':servidor.privado,
-                    'token':servidor.token,
-                    'id_usuario_creador':servidor.id_usuario_creador,
-                    'id_categoria':servidor.id_categoria
-                }
-                lista.append(dic)
+                lista.append(servidor.serialize())
         return jsonify(lista, 200)
-    
-    
     
     @classmethod
     def get_all_servidores(cls):
         servidores= Servidor.get_servidores()
         lista=[]
         for servidor in servidores:
-            dic= {
-                'id':servidor.id,
-                'nombre':servidor.nombre,
-                'descripcion':servidor.descripcion,
-                'imagen':servidor.imagen,
-                'fecha_creacion':servidor.fecha_creacion,
-                'privado':servidor.privado,
-                'token':servidor.token,
-                'id_usuario_creador':servidor.id_usuario_creador,
-                'id_categoria':servidor.id_categoria
-            }
-            lista.append(dic)
+            lista.append(servidor.serialize())
         return jsonify(lista, 200)
     
     @classmethod

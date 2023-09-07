@@ -1,12 +1,23 @@
 from api.database import DatabaseConnection as conn
+from api.models.user_model import User
+from api.models.canal_model import Canal
 
 class Mensaje:
-    def __init__(self,id=None, id_usuario=None, id_canal=None, mensaje=None, fecha_mensaje=None):
-        self.id=id
-        self.id_usuario=id_usuario
-        self.id_canal=id_canal
-        self.mensaje=mensaje
-        self.fecha_mensaje=fecha_mensaje
+    def __init__(self, **kwargs):
+        self.id = kwargs.get('id')
+        self.id_usuario = kwargs.get('id_usuario')
+        self.id_canal = kwargs.get('id_canal')
+        self.mensaje = kwargs.get('mensaje')
+        self.fecha_mensaje = kwargs.get('fecha_mensaje')
+    
+    def serialize(self):
+        return {
+            'id':self.id,
+            'usuario':User.get_user(User(id=self.id_usuario)).serialize_basico(),
+            'canal':Canal.get_canal(Canal(id=self.id_canal)).serialize(),
+            'mensaje':self.mensaje,
+            'fecha_mensaje':self.fecha_mensaje
+        }
     
     @classmethod
     def create_mensaje(cls, mensaje):

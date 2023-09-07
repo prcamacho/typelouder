@@ -1,11 +1,20 @@
 from api.database import DatabaseConnection as conn
+from api.models.servidor_model import Servidor
 
 class Canal:
-    def __init__(self, id=None, nombre=None, id_servidor=None, fecha_creacion=None):
-        self.id= id
-        self.nombre= nombre
-        self.id_servidor= id_servidor
-        self.fecha_creacion= fecha_creacion  
+    def __init__(self, **kwargs):
+        self.id = kwargs.get('id')
+        self.nombre = kwargs.get('nombre')
+        self.id_servidor = kwargs.get('id_servidor')
+        self.fecha_creacion = kwargs.get('fecha_creacion') 
+    
+    def serialize(self):
+        return {
+            'id':self.id,
+            'nombre':self.nombre,
+            'servidor':Servidor.get_servidor_id(Servidor(id=self.id_servidor)).serialize_basico(),
+            'fecha_creacion':self.fecha_creacion
+        }
     
     @classmethod
     def create_canal(cls, canal):

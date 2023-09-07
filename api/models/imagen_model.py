@@ -1,5 +1,5 @@
 import os
-
+from PIL import Image
 
 class Imagen:
     @classmethod
@@ -15,12 +15,14 @@ class Imagen:
         return nuevo_nombre
 
     @classmethod
-    def guardar_imagen(cls, imagen, solicitud, carpeta):
+    def guardar_imagen(cls, imagen, solicitud, carpeta, dimension:tuple):
         if 'imagen' not in solicitud.files:
             return 'No se ha proporcionado una imagen en la solicitud', 400
         if imagen.filename == '':
             return 'El nombre del archivo no es válido', 400
         filename = cls.nombre_unico_imagen(imagen.filename, carpeta)
+        imagen= Image.open(imagen)
+        imagen.thumbnail(dimension)
         imagen.save(os.path.join(carpeta, filename))
         return filename 
     

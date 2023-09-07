@@ -18,21 +18,16 @@ class MensajeController:
     @classmethod
     def get_mensaje(cls, id):
         mensaje= Mensaje.get_mensaje(Mensaje(id=id))
-        return jsonify({'message':'Mensaje obtenido con éxito'}, 200)
+        if mensaje:
+            return jsonify(mensaje.serialize(), 200)
+        return jsonify({'message':'No se ha encontrado mensaje'}, 400)
     
     @classmethod
     def get_mensajes_canal(cls, id_canal):
         mensajes= Mensaje.get_mensaje_canal(Canal(id=id_canal))
         lista=[]
         for mensaje in mensajes:
-            dic= {
-                'id':mensaje.id,
-                'id_usuario':mensaje.id_usuario,
-                'id_canal':mensaje.id_canal,
-                'mensaje':mensaje.mensaje,
-                'fecha_mensaje': mensaje.fecha_mensaje
-            }
-            lista.append(dic)
+            lista.append(mensaje.serialize())
         return jsonify(lista, 200)
     
     @classmethod
@@ -40,14 +35,7 @@ class MensajeController:
         mensajes= Mensaje.get_mensajes()
         lista=[]
         for mensaje in mensajes:
-            dic= {
-                'id':mensaje.id,
-                'id_usuario':mensaje.id_usuario,
-                'id_canal':mensaje.id_canal,
-                'mensaje':mensaje.mensaje,
-                'fecha_mensaje':mensaje.fecha_mensaje
-            }
-            lista.append(dic)
+            lista.append(mensaje.serialize())
         return jsonify(lista, 200)
     
     @classmethod

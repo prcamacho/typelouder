@@ -132,30 +132,15 @@ class UserController:
     @classmethod
     def usuario(cls,id):
         user= User.get_user(User(id=id))
-        dic= {
-            'id':user.id,
-            'username':user.username,
-            'nombre':user.nombre,
-            'apellido':user.apellido,
-            'email':user.email,
-            'activo':user.activo
-        }
-        return jsonify(dic) 
+        return jsonify(user.serialize()) 
     
     @classmethod
     def lista_usuarios(cls):
         users= User.get_users()
         lista=[]
         for user in users:
-            dic= {
-                'id':user.id,
-                'username':user.username,
-                'nombre':user.nombre,
-                'apellido':user.apellido,
-                'email':user.email,
-                'activo':user.activo
-            }
-            lista.append(dic)
-        return jsonify(lista)    
+            lista.append(user.serialize())
+        print(lista)    
+        return jsonify(lista , 200)    
             
          

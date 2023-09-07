@@ -3,6 +3,7 @@ from api.routes.user_route import app_usuario
 from api.routes.servidor_route import app_servidor
 from api.routes.mensaje_route import app_mensaje
 from api.routes.canal_route import app_canal
+from api.routes.miembro_route import app_miembro
 from config import Config
 from flask_login import login_required
 from flask_cors import CORS
@@ -19,10 +20,12 @@ typelouder.config['MAIL_PORT'] = Config.CREDENCIALES_EMAIL['email_port']
 typelouder.config['MAIL_USE_TLS'] = Config.CREDENCIALES_EMAIL['email_use_tls']
 typelouder.config['MAIL_USERNAME'] = Config.CREDENCIALES_EMAIL['email_host_user']
 typelouder.config['MAIL_PASSWORD'] = Config.CREDENCIALES_EMAIL['email_host_password']
+
 typelouder.register_blueprint(app_usuario)
 typelouder.register_blueprint(app_servidor)
 typelouder.register_blueprint(app_mensaje)
 typelouder.register_blueprint(app_canal)
+typelouder.register_blueprint(app_miembro)
 
 @typelouder.route('/')
 @login_required

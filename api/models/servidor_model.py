@@ -1,17 +1,38 @@
 from api.database import DatabaseConnection as conn
+from api.models.categoria_model import Categoria
+from api.models.user_model import User
+
 class Servidor:
-    def __init__(self,id=None, nombre=None, descripcion=None, imagen=None, fecha_creacion=None, 
-                privado=None, password=None, token=None, id_usuario_creador=None, id_categoria=None):
-        self.id=id
-        self.nombre=nombre
-        self.descripcion=descripcion
-        self.imagen=imagen
-        self.fecha_creacion=fecha_creacion
-        self.privado=privado
-        self.password=password
-        self.token=token
-        self.id_usuario_creador=id_usuario_creador
-        self.id_categoria=id_categoria
+    def __init__(self, **kwargs):
+        self.id = kwargs.get('id')
+        self.nombre = kwargs.get('nombre')
+        self.descripcion = kwargs.get('descripcion')
+        self.imagen = kwargs.get('imagen')
+        self.fecha_creacion = kwargs.get('fecha_creacion')
+        self.privado = kwargs.get('privado')
+        self.password = kwargs.get('password')
+        self.token = kwargs.get('token')
+        self.id_usuario_creador = kwargs.get('id_usuario_creador')
+        self.id_categoria = kwargs.get('id_categoria')
+    
+    def serialize(self):
+        return {
+            'id':self.id,
+            'nombre':self.nombre,
+            'descripcion':self.descripcion,
+            'imagen':self.imagen,
+            'fecha_creacion':self.fecha_creacion,
+            'privado':self.privado,
+            'token':self.token,
+            'usuario_creador':User.get_user(User(id=self.id_usuario_creador)).serialize_basico(),
+            'categoria':Categoria.get_categoria(Categoria(id=self.id_categoria)).serialize()
+        }
+    
+    def serialize_basico(self):
+        return {
+            'id':self.id,
+            'nombre':self.nombre
+        }    
     
     @classmethod
     def create_servidor(cls, servidor):
@@ -23,6 +44,18 @@ class Servidor:
                 servidor.id_usuario_creador, servidor.id_categoria)
         conn.execute_query(query,params)
         conn.close_connection()        
+    
+    @classmethod    
+    def get_servidor_id(cls, servidor):
+        query='''SELECT * FROM servidores WHERE id=%s'''
+        params=(servidor.id,)
+        result=conn.fetch_one(query,params)
+        conn.close_connection()
+        if result is not None:
+            return Servidor(id=result[0], nombre=result[1], descripcion=result[2],
+                            imagen=result[3], fecha_creacion=result[4], privado=result[5], password=result[6],
+                            token=result[7], id_usuario_creador=result[8], id_categoria=result[9])
+        return None    
         
     @classmethod    
     def get_servidor(cls, servidor):
