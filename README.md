@@ -24,7 +24,7 @@ El proyecto proporciona las siguientes rutas:
 
 ### Rutas relacionadas con Canales
 
-- **`/crear_canal` (Método POST)**: Crea un nuevo canal.
+- **`/canales/crear` (Método POST)**: Crea un nuevo canal.
   - **Campos obligatorios**:
     - `nombre`: Nombre del canal.
     - `token_servidor`: Token del servidor al que pertenece el canal.
@@ -33,20 +33,20 @@ El proyecto proporciona las siguientes rutas:
   - **Campos obligatorios**:
     - `token_servidor`: Token del servidor.
 
-- **`/canales_all` (Método GET)**: Obtiene todos los canales.
+- **`/canales/all` (Método GET)**: Obtiene todos los canales.
 
-- **`/editar_canal/<int:id>` (Método PUT)**: Actualiza un canal existente.
+- **`/canales/editar/<int:id>` (Método PUT)**: Actualiza un canal existente.
   - **Campos obligatorios**:
     - `id`: Identificador del canal.
     - `nombre`: Nuevo nombre del canal.
 
-- **`/eliminar_canal/<int:id>` (Método DELETE)**: Elimina un canal.
+- **`/canales/eliminar/<int:id>` (Método DELETE)**: Elimina un canal.
   - **Campos obligatorios**:
     - `id`: Identificador del canal.
 
 ### Rutas relacionadas con Mensajes
 
-- **`/crear_mensaje` (Método POST)**: Crea un nuevo mensaje.
+- **`/mensajes/crear` (Método POST)**: Crea un nuevo mensaje.
   - **Campos obligatorios**:
     - `mensaje`: Contenido del mensaje.
     - `id_canal`: ID del canal al que se envía el mensaje.
@@ -59,27 +59,27 @@ El proyecto proporciona las siguientes rutas:
   - **Campos obligatorios**:
     - `canal`: Nombre del canal.
 
-- **`/editar_mensaje` (Método PUT)**: Actualiza un mensaje existente.
+- **`/mensajes/editar` (Método PUT)**: Actualiza un mensaje existente.
   - **Campos obligatorios**:
     - `id`: Identificador del mensaje.
     - `mensaje`: Nuevo contenido del mensaje.
 
-- **`/eliminar_mensaje/<int:id>` (Método DELETE)**: Elimina un mensaje.
+- **`/mensajes/eliminar/<int:id>` (Método DELETE)**: Elimina un mensaje.
   - **Campos obligatorios**:
     - `id`: Identificador del mensaje.
 
-- **`/reaccionar/<int:id_mensaje>` (Método POST)**: Agrega una reacción a un mensaje.
+- **`/mensajes/reaccionar/<int:id_mensaje>` (Método POST)**: Agrega una reacción a un mensaje.
   - **Campos obligatorios**:
     - `raccion`: Reacción del mensaje (booleano, `true` o `false`).
 
-- **`/editar_reaccion/<int:id>` (Método PUT)**: Actualiza una reacción de mensaje.
+- **`/mensajes/editar_reaccion/<int:id>` (Método PUT)**: Actualiza una reacción de mensaje.
   - **Campos obligatorios**:
     - `id`: Identificador de la reacción.
 
 
 ### Rutas relacionadas con Servidores
 
-- **`/crear_servidor` (Método POST)**: Crea un nuevo servidor.
+- **`/servidores/crear` (Método POST)**: Crea un nuevo servidor.
   - **Campos obligatorios**:
     - `nombre`: Nombre del servidor.
     - `descripcion`: Descripción del servidor.
@@ -89,9 +89,9 @@ El proyecto proporciona las siguientes rutas:
 
 - **`/servidores` (Método GET)**: Obtiene servidores públicos.
 
-- **`/servidores_all` (Método GET)**: Obtiene todos los servidores.
+- **`/servidores/all` (Método GET)**: Obtiene todos los servidores.
 
-- **`/update_servidor/<token>` (Método PUT)**: Actualiza un servidor existente.
+- **`/servidores/update/<token>` (Método PUT)**: Actualiza un servidor existente.
   - **Campos obligatorios**:
     - `token`: Token del servidor.
     - `nombre`: Nuevo nombre del servidor.
@@ -99,14 +99,14 @@ El proyecto proporciona las siguientes rutas:
     - `imagen`: Nueva imagen del servidor.
     - `privado`: Nuevo indicador de servidor privado.
 
-- **`/delete_servidor/<token>` (Método DELETE)**: Elimina un servidor.
+- **`/servidores/delete/<token>` (Método DELETE)**: Elimina un servidor.
   - **Campos obligatorios**:
     - `token`: Token del servidor.
 
 
 ### Rutas relacionadas con Usuarios
 
-- **`/registro` (Método POST)**: Registra un nuevo usuario.
+- **`/users/registro` (Método POST)**: Registra un nuevo usuario.
   - **Campos obligatorios**:
     - `username`: Nombre de usuario.
     - `nombre`: Nombre del usuario.
@@ -115,42 +115,42 @@ El proyecto proporciona las siguientes rutas:
     - `password`: Contraseña del usuario.
     - `fecha_nacimiento`: Fecha de nacimiento del usuario.
 
-- **`/login` (Método POST)**: Inicia sesión de usuario.
+- **`/users/login` (Método POST)**: Inicia sesión de usuario.
   - **Campos obligatorios**:
     - `email`: Correo electrónico del usuario.
     - `password`: Contraseña del usuario.
 
-- **`/confirmar_email/<token>` (Método GET)**: Confirma el correo electrónico del usuario.
+- **`/users/confirmar_email/<token>` (Método GET)**: Confirma el correo electrónico del usuario.
   - **Campos obligatorios**:
     - `token`: Token de confirmación.
 
-- **`/logout` (Método GET)**: Cierra sesión del usuario.
+- **`/users/logout` (Método GET)**: Cierra sesión del usuario.
 
-- **`/password_reset` (Método POST)**: Inicia el proceso de restablecimiento de contraseña.
+- **`/users/password_reset` (Método POST)**: Inicia el proceso de restablecimiento de contraseña.
   - **Campos obligatorios**:
     - `email`: Correo electrónico del usuario.
 
-- **`/nuevo_password/<token>` (Método PUT)**: Establece una nueva contraseña para el usuario.
+- **`/users/nuevo_password/<token>` (Método PUT)**: Establece una nueva contraseña para el usuario.
   - **Campos obligatorios**:
     - `token`: Token de restablecimiento de contraseña.
     - `password`: Nueva contraseña.
     - `password1`: Confirmación de la nueva contraseña.
 
-- **`/editar_usuario` (Método PUT)**: Actualiza la información del usuario.
+- **`/users/editar` (Método PUT)**: Actualiza la información del usuario.
   - **Campos obligatorios**:
     - `username`: Nuevo nombre de usuario.
     - `nombre`: Nuevo nombre del usuario.
     - `apellido`: Nuevo apellido del usuario.
 
-- **`/editar_password` (Método PUT)**: Cambia la contraseña del usuario.
+- **`/users/editar_password` (Método PUT)**: Cambia la contraseña del usuario.
   - **Campos obligatorios**:
     - `password1`: Contraseña actual del usuario.
     - `password2`: Nueva contraseña.
     - `password3`: Confirmación de la nueva contraseña.
 
-- **`/desactivar_cuenta` (Método PUT)**: Desactiva la cuenta del usuario.
+- **`/users/desactivar_cuenta` (Método PUT)**: Desactiva la cuenta del usuario.
 
-- **`/activar_cuenta/<token>` (Método GET)**: Activa la cuenta del usuario.
+- **`/users/activar_cuenta/<token>` (Método GET)**: Activa la cuenta del usuario.
   - **Campos obligatorios**:
     - `token`: Token de activación.
 

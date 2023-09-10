@@ -5,6 +5,7 @@ from api.models.servidor_model import Servidor
 from werkzeug.security import generate_password_hash, check_password_hash
 from api.models.imagen_model import Imagen
 from config import Config
+from flask import send_from_directory
 
 class ServidorController:
     @classmethod
@@ -32,7 +33,9 @@ class ServidorController:
         lista=[]
         for servidor in servidores:
             if not servidor.privado:
-                lista.append(servidor.serialize())
+                servidor_data= servidor.serialize()
+                servidor_data['imagen']= send_from_directory('media/servicios',servidor_data['imagen'])
+                lista.append(servidor_data)
         return jsonify(lista, 200)
     
     @classmethod
