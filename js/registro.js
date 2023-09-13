@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const formData = new FormData(form);
 
-        fetch("http://127.0.0.1:8000/registro", {
+        fetch("http://127.0.0.1:8000/users/registro", {
             method: "POST",
             body: formData
             //credentials: "include" // Configurar para incluir automáticamente las cookies
