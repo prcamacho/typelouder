@@ -27,6 +27,7 @@ class CanalController:
         canales= Canal.get_canal_servidor(Canal(id_servidor=servidor.id))
         lista=[]
         for canal in canales:
+            print(canal)
             lista.append(canal.serialize())
         return jsonify(lista, 200)
     

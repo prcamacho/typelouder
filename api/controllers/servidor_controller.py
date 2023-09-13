@@ -1,11 +1,13 @@
-from flask import request, jsonify
+from flask import request, jsonify, url_for
 import uuid
 from flask_login import current_user
 from api.models.servidor_model import Servidor
+from api.models.user_model import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from api.models.imagen_model import Imagen
 from config import Config
 from flask import send_from_directory
+from api.routes.imagen_route import app_media
 
 class ServidorController:
     @classmethod
@@ -36,6 +38,16 @@ class ServidorController:
                 servidor_data= servidor.serialize()
                 servidor_data['imagen']= send_from_directory('media/servicios',servidor_data['imagen'])
                 lista.append(servidor_data)
+        return jsonify(lista, 200)
+    
+    @classmethod
+    def get_servidores_user(cls):
+        servidores= Servidor.get_servidores_user(User(id=current_user.id))
+        lista=[]
+        for servidor in servidores:
+            servidor_data= servidor.serialize()
+            servidor_data['imagen'] =  str(request.url_root)+url_for(endpoint='media.imagen_media', filename= servidor_data['imagen'])
+            lista.append(servidor_data)
         return jsonify(lista, 200)
     
     @classmethod

@@ -35,12 +35,12 @@ class Canal:
         return None   
     
     @classmethod    
-    def get_canal_servidor(cls, servidor):
+    def get_canal_servidor(cls, canal):
         query='''SELECT * FROM canales WHERE id_servidor=%s'''
-        params=(servidor.id,)
+        params=(canal.id_servidor,)
         results=conn.fetch_all(query,params)
         conn.close_connection()
-        if result is not None:
+        if results is not None:
             lista_canales=[]
             for result in results:
                 lista_canales.append(Canal(id=result[0], nombre=result[1], id_servidor=result[2], fecha_creacion=result[3]))

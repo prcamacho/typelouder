@@ -16,7 +16,7 @@ def load_user(user_id):
     usuario = conn.fetch_one(query,(user_id,))
     conn.close_connection()
     if usuario:
-        user = User(usuario[0],usuario[1],usuario[2],usuario[3],usuario[4])
+        user = User(id=usuario[0],username=usuario[1],nombre=usuario[2],apellido=usuario[3],email=usuario[4])
         return user
     return None        
 

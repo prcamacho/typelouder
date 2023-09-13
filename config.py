@@ -2,7 +2,7 @@ class Config:
     SERVER_NAME= "localhost:6000"
     DEBUG= True
     TEMPLATE_FOLDER= '../templates/'
-    STATIC_FOLDER= 'static/'
+    STATIC_FOLDER= 'static'
     MEDIA_FOLDER= 'media'
     MEDIA_SERVIDOR= 'media/servidores'
     MEDIA_USER = 'media/users'

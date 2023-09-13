@@ -56,6 +56,21 @@ class Servidor:
                             imagen=result[3], fecha_creacion=result[4], privado=result[5], password=result[6],
                             token=result[7], id_usuario_creador=result[8], id_categoria=result[9])
         return None    
+    
+    @classmethod    
+    def get_servidores_user(cls, user):
+        query='''SELECT * FROM servidores A INNER JOIN miembros B ON B.id_servidor = A.id INNER JOIN usuarios C ON B.id_usuario = C.id WHERE C.id=%s'''
+        params=(user.id,)
+        results=conn.fetch_all(query,params)
+        conn.close_connection()
+        if results is not None:
+            lista=[]
+            for result in results:
+                lista.append(Servidor(id=result[0], nombre=result[1], descripcion=result[2],
+                            imagen=result[3], fecha_creacion=result[4], privado=result[5], password=result[6],
+                            token=result[7], id_usuario_creador=result[8], id_categoria=result[9]))
+            return lista    
+        return None 
         
     @classmethod    
     def get_servidor(cls, servidor):
