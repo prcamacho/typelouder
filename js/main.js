@@ -1,5 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Realizar una solicitud GET al servidor cuando la página se carga
+
+    var tituloServidor = document.querySelector(".contenedor-titulo");
+    var popupServidor = document.querySelector(".popup-servidor");
+
+    tituloServidor.addEventListener('click', function() {
+        if (popupServidor.style.display== 'none'){
+            popupServidor.style.display = 'block';
+        }else{
+            popupServidor.style.display = 'none';
+        }
+    });
+
+    
+
+
+
+
+
     fetch("http://127.0.0.1:8000/servidores/", {
         method: "GET",
         credentials: "include" // Configura para incluir automáticamente las cookies si es necesario
@@ -68,12 +86,12 @@ function obtenerDatosDelCanal(servidor) {
     })
     .then(data => {
         const tituloServidor = document.querySelector(".titulo-servidor");
-        tituloServidor.textContent = servidor.nombre;
+        tituloServidor.textContent = servidor.nombre+"adasdasdasdasdasdasdasd";
         const miDiv = document.querySelector(".lista-canales");
         miDiv.innerHTML = "";
         data[0].forEach(function(canal) {
             const pElement = document.createElement("p");
-            pElement.textContent = canal.nombre
+            pElement.textContent = canal.nombre;
             miDiv.appendChild(pElement);
         });
         return data;

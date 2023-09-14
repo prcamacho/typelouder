@@ -7,24 +7,16 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="sidebar">
-        <ul>
-            <li onclick="cambiarContenido('contenido-1')">Elemento 1</li>
-            <li onclick="cambiarContenido('contenido-2')">Elemento 2</li>
-            <li onclick="cambiarContenido('contenido-3')">Elemento 3</li>
-        </ul>
-    </div>
-    <div class="content">
-        <div id="contenido-1">
-            Contenido del Elemento 1
-        </div>
-        <div id="contenido-2">
-            Contenido del Elemento 2
-        </div>
-        <div id="contenido-3">
-            Contenido del Elemento 3
+    
+    <button id="mostrarBtn">Mostrar Ventana Emergente</button>
+    <div id="ventanaEmergente" class="oculto">
+        <div id="contenido">
+            <span id="cerrarBtn">&times;</span>
+            <h2>Ventana Emergente</h2>
+            <p>Contenido de la ventana emergente.</p>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

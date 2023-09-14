@@ -37,32 +37,77 @@ html, body {
   width: 0 !important; /* Oculta las barras de desplazamiento en navegadores WebKit (Chrome, Safari, etc.) */
 }
 
-.barra-media{
-    color: white;
+/*SECCION MEDIA*/
+
+.seccion-media{
+    color: var(--text-c-3, #f5f5f5);
+    font-family: Nunito;
     display: flex;
     width: 250px;
     height: 100vh;
     flex-direction: column;
     align-items: start;
-    gap: 10px;
     background: var(--darkweb-b-3, #010a3d);
+}
+
+.contenedor-titulo{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--darkweb-b-3, #010931);
+    align-items: center;
+    overflow: hidden;
+    height: 8%;
+}
+
+.contenedor-titulo:hover{
+    cursor: pointer;
+    background-color: var(--darkweb-b-3, #031052);
+}
+
+.contenedor-titulo .titulo-servidor{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left:15px;
+}
+
+.contenedor-titulo .flecha{
+    filter: brightness(0) invert(1);
+    width: 15px;
+    margin: auto 10px;
+    
+}
+
+.seccion-media .popup-servidor {
+    display: none;
+    align-self: center;
+    width: 95%;
+    background-color: var(--darkweb-b-3, #010516);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 5%;
+}
+
+.seccion-media .popup-servidor p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 15px 15px;
+}
+
+.contenedor-canales{
+    display: 100%;
     overflow-y: auto;
+    padding: 0 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-hr{
-  height: 0.1rem;
-  width: 100%;
-  border: 0;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #36bed9, rgba(0, 0, 0, 0));
-}
-
-.barra-media::-webkit-scrollbar {
+.seccion-media::-webkit-scrollbar {
     width: 0 !important; /* Oculta las barras de desplazamiento en navegadores WebKit (Chrome, Safari, etc.) */
 }
 
-.sidebar::-webkit-scrollbar {
-  display: none; /* Ocultar la barra de desplazamiento en navegadores WebKit (Chrome, Safari) */
-}
 
 .container-servers{
     display: flex;
