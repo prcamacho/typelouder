@@ -130,8 +130,8 @@ class UserController:
         return jsonify({'message':'Usuario activado con exito'}, 200) 
     
     @classmethod
-    def usuario(cls,id):
-        user= User.get_user(User(id=id))
+    def usuario(cls):
+        user= User.get_user(User(id=current_user.id))
         return jsonify(user.serialize()) 
     
     @classmethod
