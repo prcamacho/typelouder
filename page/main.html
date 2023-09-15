@@ -11,26 +11,27 @@
 </head>
 <body>
     <div class="main-container">
-        <div class="lateral-var" id="lateral-var">
-            <div class="server-icon" >
-                <img src="../static/imgs/byteforcelogo.png" width="60px" height="60px"/>
-            </div>
-            <hr>
-            <div class="container-servers">
+        
+        <!-- BARRA LATERAL -->
 
+        <div class="lateral-var" id="lateral-var">
+
+            <div class="logo-icon" >
+                <img src="../static/imgs/byteforcelogo.png" width="60px"/>
+            </div>
+
+            <div class="container-servers">
                 <div class="server-icon">
                 </div>
-            
-                <div class="server-icon">
-                    <img src="../static/imgs/iconadd.png" width="60x" height="60px"/>
+            </div>
+
+            <div class="add-search-icon">   
+                <div class="add-icon">
+                    <img src="../static/imgs/iconadd.png" width="50x"/>
                 </div>
-                <div class="server-icon">
-                    <img src="../static/imgs/iconsearch.png" width="60x" height="60px"/>
+                <div class="search-icon">
+                    <img src="../static/imgs/iconsearch.png" width="50x"/>
                 </div>
-                <div class="server-icon">
-                    <img src="../static/imgs/iconperfil.png" width="60x" height="60px"/>
-                </div>
-                
             </div>
         
         </div>
@@ -38,22 +39,47 @@
         <!-- SECCION MEDIA -->
 
         <div class="seccion-media">
-            <div class="contenedor-titulo" onclick="popUpServidor()">
+
+            <div class="contenedor-titulo">
                     <h4 class="titulo-servidor"></h4>
                     <img class="flecha" src="../static/imgs/flecha.png"/>
             </div>
 
-            <div class="popup-servidor">
-                <p>Invitar Gente</p>
-                <p>Editar Servidor</p>
-                <p>Abandonar Servidor</p>
-            </div>
-
+            
             <div class="contenedor-canales">
+                <div class="popup-servidor">
+                    <p>Invitar Gente</p>
+                    <p>Editar Servidor</p>
+                    <p>Abandonar Servidor</p>
+                </div>
                 <h4 class="canales">Canales</h4>
                 <div class="lista-canales">
 
                 </div>
+            </div>
+            <div class="contenedor-usuario">
+                <div class="popup-usuario">
+                    <div class="img-user">
+                        <img src="../static/imgs/iconperfil.png" alt="" width="90x" height="90px">
+                        <img src="../static/imgs/editar.png" alt="" width="30x" height="30px">
+                    </div>
+                    <div class="contenido-usuario">
+                        <div class="username-nombre">
+                            <h3 class="username"></h3>
+                            <h5 class="nombre-apellido"></h5>
+                        </div>
+                        <hr>
+                        <h4 class="email"></h4>
+                        <hr>
+                        <button>Cerrar Sessión</button>
+                    </div>
+                </div>
+                <img src="../static/imgs/iconperfil.png" class="imagen-usuario" width="60x" height="60px"/>
+                <div class="datos-usuario">
+                    <h3 class="username-usuario">DanyChelolakjsldajsldjalskjd</h3>
+                    <h5 class="nombre-usuario">Daniel Marcelo Chachagua Garrido</h5>
+                </div>
+                <img class="flecha-usuario" src="../static/imgs/flecha.png"/>
             </div>
         </div>
 
