@@ -333,3 +333,82 @@ html, body {
     font-weight: 700;
     line-height: normal;
   }
+
+/* VENTANA EMERGENTE */
+/* VENTANA EMERGENTE */
+#ventanaEmergente {
+  display: none; /* Inicialmente oculta la ventana emergente */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 80%; /* Altura máxima de la ventana emergente */
+  width: 300px;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+  background: var(--darkweb-b-2, #011640);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  overflow: auto; /* Agrega una barra de desplazamiento si el contenido es demasiado largo */
+}
+
+/* CONTENIDO */
+#ventanaEmergente #contenido {
+  text-align: center;
+}
+
+/* BOTÓN DE CIERRE */
+#ventanaEmergente #cerrarBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+/* FORMULARIO */
+#ventanaEmergente .form-login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+#ventanaEmergente .label-form {
+  color: #FFF;
+  font-family: 'Nunito', sans-serif; /* Asegúrate de que la fuente 'Nunito' esté disponible */
+  font-size: 20px;
+  font-weight: 900;
+}
+
+#ventanaEmergente .input-form {
+  width: 100%; /* El ancho se ajusta automáticamente al contenedor */
+  padding: 10px; /* Reducido el relleno para ahorrar espacio */
+  border-radius: 12px;
+  border: none;
+  background: var(--darkweb-b-1, #3A5D8C);
+  color: #CCC;
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#ventanaEmergente .boton-login {
+  padding: 10px; /* Reducido el relleno para ahorrar espacio */
+  border-radius: 14px;
+  background: var(--logo-b-2, #1D79F2);
+  border: none;
+  color: #FFF;
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+#ventanaEmergente .text-1 {
+  color: #FFF;
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+}
+

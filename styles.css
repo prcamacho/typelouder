@@ -3,15 +3,15 @@ body {
 }
 
 #ventanaEmergente {
-    display: none;
+    display: flex;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 300px;
     padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: var(--darkweb-b-2, #011640);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     z-index: 1000;
 }
@@ -27,3 +27,74 @@ body {
     cursor: pointer;
 }
 
+
+/*FORM*/
+.form-login-container {
+    display: flex;
+    justify-content: center;
+}
+
+.form-login{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px; 
+}
+
+.label-form{
+    color: #FFF;
+    font-family: Nunito;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+}
+
+.input-form{
+    display: flex;
+    width: 240px;
+    padding: 4px 16px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 12px;
+    border: none;
+    background: var(--darkweb-b-1, #3A5D8C);
+
+    color: var(--text-c-3, #CCC);
+    font-family: Nunito;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.boton-login{
+    display: flex;
+    padding: 2px 42px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    border-radius: 14px;
+    background: var(--logo-b-2, #1D79F2);
+    border: none;
+
+    color: #FFF;
+    font-family: Nunito;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+
+}
+
+.text-1{
+    color: #FFF;
+
+    /* chat/nunito semi bold 16 */
+    font-family: Nunito;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
