@@ -1,12 +1,14 @@
 function crearFormulario(campos, titulo, onSubmitCallback) {
     var form = document.createElement('form');
     form.className = 'form-login-container';
-    form.enstype = 'multipart/form-data'
+    form.enctype = 'multipart/form-data';
 
     var formTitle = document.createElement('h2');
     formTitle.className = 'text-1';
     formTitle.textContent = titulo.toUpperCase();
     form.appendChild(formTitle);
+
+    var fileInputs = {}; // Objeto para almacenar los campos de tipo 'file'
 
     campos.forEach(function (campo) {
         var label = document.createElement('label');
@@ -20,6 +22,11 @@ function crearFormulario(campos, titulo, onSubmitCallback) {
 
         form.appendChild(label);
         form.appendChild(input);
+
+        if (campo.type === 'file') {
+            // Si el campo es de tipo 'file', guardar una referencia al input en el objeto fileInputs
+            fileInputs[campo.name] = input;
+        }
     });
 
     var submitButton = document.createElement('button');
@@ -32,10 +39,15 @@ function crearFormulario(campos, titulo, onSubmitCallback) {
         if (typeof onSubmitCallback === 'function') {
             var formData = {};
             campos.forEach(function (campo) {
-                var input = form.querySelector('[name="' + campo.name.toLowerCase().replace(/\s+/g, '') + '"]');
-                formData[campo.name] = input.value;
+                if (campo.type === 'file') {
+                    // Si el campo es de tipo 'file', guardar el archivo en el objeto formData
+                    formData[campo.name] = fileInputs[campo.name].files[0];
+                } else {
+                    var input = form.querySelector('[name="' + campo.name.toLowerCase().replace(/\s+/g, '') + '"]');
+                    formData[campo.name] = input.value;
+                }
             });
-            onSubmitCallback(formData); // Ahora formData es un objeto con los valores de los inputs
+            onSubmitCallback(formData); // Ahora formData es un objeto con los valores de los inputs, incluyendo archivos
         }
     });
 

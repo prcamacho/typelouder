@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 formData.append("id_categoria", 1);
                 formData.append("nombre", form.nombre);
                 formData.append("descripcion", form.descripcion);
-                formData.append("privado", form.privado === "on" ? "true" : "false");
+                formData.append("privado", form.privado === "off" ? "true" : "false");
                 formData.append("imagen", form.imagen);
             
                 // Define the data for the Fetch request
@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     method: 'POST', // POST method to send data
                     headers: {
                         // Configure Content-Type header for form data with a file
-                        'Accept': 'application/json',
                     },
                     body: formData // Use the FormData object as the request body
                 };
