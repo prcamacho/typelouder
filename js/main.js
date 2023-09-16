@@ -1,7 +1,24 @@
-import { crearFormulario } from "./servicio/crearServidor.js";
-import { performFetch } from "./servicio/requestTemplate.js";
+import { crearFormulario } from "./servidor/crearServidor.js";
+import { performFetch } from "./servidor/requestTemplate.js";
 document.addEventListener("DOMContentLoaded", function () {
     
+    const h4h3Elements = document.querySelectorAll(".canales-clickleables");
+
+    h4h3Elements.forEach(function(elementos) {
+        elementos.addEventListener("click", function() {
+            // Eliminar la clase "clicked" de todos los h4
+            h4h3Elements.forEach(function(el) {
+                el.classList.remove("clicked");
+            });
+
+            // Agregar la clase "clicked" solo al h4 que se hizo clic
+            this.classList.add("clicked");
+        });
+    });
+
+
+
+
     // Realizar una solicitud GET al servidor cuando la página se carga
 
     var tituloServidor = document.querySelector(".contenedor-titulo");
@@ -92,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     popupVisible = !popupVisible;
     popupServidor.style.display = popupVisible ? 'block' : 'none';
     imagenFlecha.style.transition = 'transform 0.3s ease-in-out';
-    // popupServidor.style.transform = popupVisible ? 'translateY(0)' : 'translateY(-100%)';
+    popupServidor.style.transform = popupVisible ? 'translateY(0%)' : 'translateY(100%)';
     imagenFlecha.style.transform = popupVisible ? 'rotateZ(180deg)' : 'rotateZ(0deg)';
     setTimeout(function() {
         imagenFlecha.style.transition = '';
