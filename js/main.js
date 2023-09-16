@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Call the performFetch function with the fetchData object
                 performFetch(fetchData)
                     .then(responseData => {
+                        ventanaEmergente.style.display = 'none';
                         console.log(responseData); // Handle the response data here
                     })
                     .catch(error => {
