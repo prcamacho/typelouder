@@ -8,6 +8,7 @@ from api.models.imagen_model import Imagen
 from config import Config
 from flask import send_from_directory
 from api.routes.imagen_route import app_media
+from api.controllers.miembro_controller import MiembroController
 
 class ServidorController:
     @classmethod
@@ -18,8 +19,7 @@ class ServidorController:
         privado= 'true'== request.form['privado']
         password= None
         id_categoria= request.form['id_categoria']
-        #id_usuario_creador= current_user.id
-        id_usuario_creador= 1
+        id_usuario_creador= current_user.id
         token=str(uuid.uuid4())  
         filename = Imagen.guardar_imagen(imagen,request,Config.MEDIA_SERVIDOR,(250,250))
         if privado:
@@ -27,6 +27,7 @@ class ServidorController:
         servidor= Servidor(nombre=nombre, descripcion=descripcion,imagen=filename,privado=privado,
                                 password=password,token=token,id_usuario_creador=id_usuario_creador,id_categoria=id_categoria )    
         Servidor.create_servidor(servidor)
+        MiembroController.unirse_servidor(token)
         return jsonify({'message':'Servidor creado con exito'}, 200)
     
     @classmethod

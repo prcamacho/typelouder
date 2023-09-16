@@ -1,16 +1,23 @@
 from flask_login import current_user
 from api.models.miembo_model import Miembro
 from flask import jsonify
+from api.models.servidor_model import Servidor
 
 class MiembroController:
     @classmethod
-    def unirse_servidor(cls, id_servidor):
-        miembro= Miembro(id_usuario=current_user.id, id_servidor=id_servidor)
-        Miembro.unirse_servidor(miembro)
-        return jsonify({'message':'Miembro registrado'} , 200)
+    def unirse_servidor(cls, token_servidor):
+        servidor = Servidor.get_servidor(Servidor(token = token_servidor))
+        if servidor:
+            miembro= Miembro(id_usuario=current_user.id, id_servidor=servidor.id)
+            Miembro.unirse_servidor(miembro)
+            return jsonify({'message':'Miembro registrado'} , 200)
+        return jsonify({'message':'Error al unirse al sevidor'}, 400)
     
     @classmethod
-    def salir_servidor(cls, id_servidor):
-        miembro= Miembro(id_usuario=current_user.id, id_servidor=id_servidor)
-        Miembro.salir_servidor(miembro)
-        return jsonify({'message':'Ha salido del servidor'} , 200)
+    def salir_servidor(cls, token_servidor):
+        servidor = Servidor.get_servidor(token = token_servidor)
+        if servidor:
+            miembro= Miembro(id_usuario=current_user.id, id_servidor=servidor.id)
+            Miembro.salir_servidor(miembro)
+            return jsonify({'message':'Ha salido del servidor'} , 200)
+        return jsonify({'message':'Error al salirse del sevidor'}, 400)

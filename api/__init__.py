@@ -11,6 +11,7 @@ from flask_cors import CORS
     
 typelouder = Flask(__name__, static_folder=Config.STATIC_FOLDER, template_folder=Config.TEMPLATE_FOLDER)
 CORS(typelouder, supports_credentials=True)
+#cors = CORS(typelouder, resources={r"/api/*": {"origins": "http://127.0.0.1:5500"}})
 
 typelouder.secret_key = Config.SECRET_KEY
 
