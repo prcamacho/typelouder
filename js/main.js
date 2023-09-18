@@ -1,20 +1,20 @@
+import { obtenerMensajesDelCanal } from "./servidor/cargarMensajes.js";
 import { crearFormulario } from "./servidor/crearServidor.js";
 import { performFetch } from "./servidor/requestTemplate.js";
+import { obtenerCanales } from "./servidor/cargarCanales.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     
-    const h4h3Elements = document.querySelectorAll(".canales-clickleables");
+    // const h4h3Elements = document.querySelectorAll(".canales-clickleables");
 
-    h4h3Elements.forEach(function(elementos) {
-        elementos.addEventListener("click", function() {
-            // Eliminar la clase "clicked" de todos los h4
-            h4h3Elements.forEach(function(el) {
-                el.classList.remove("clicked");
-            });
-
-            // Agregar la clase "clicked" solo al h4 que se hizo clic
-            this.classList.add("clicked");
-        });
-    });
+    // h4h3Elements.forEach(function(elementos) {
+    //     elementos.addEventListener("click", function() {
+    //         h4h3Elements.forEach(function(el) {
+    //             el.classList.remove("clicked");
+    //         });
+    //         this.classList.add("clicked");
+    //     });
+    // });
 
 
 
@@ -135,7 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-
     fetch("http://127.0.0.1:8000/servidores/", {
         method: "GET",
         credentials: "include" // Configura para incluir automáticamente las cookies si es necesario
@@ -152,74 +151,42 @@ document.addEventListener("DOMContentLoaded", function () {
             const imageElement = document.createElement("img");
             imageElement.className = "server-icon";
             imageElement.src = servidor.imagen;
-            
             const anchorElement = document.createElement("a");
+            anchorElement.id=servidor.token;
             anchorElement.href = "#";
 
             anchorElement.addEventListener("click", function(event) {
                 event.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
-
-                // Llamar a la función para obtener datos del canal
-                obtenerDatosDelCanal(servidor)
-                    .then(canales => {
-                        // Procesar la respuesta y mostrar los datos en tu interfaz de usuario
-                        // const miDiv = document.querySelector(".lista-canales");
-                        // miDiv.innerHTML = "";
-                        // canales[0].forEach(function(canal) {
-                        //     const pElement = document.createElement("p");
-                        //     pElement.textContent = canal.nombre
-                        //     miDiv.appendChild(pElement);
-                    //});
-                        console.log(canales)
-                        // Puedes mostrar los datos en la interfaz de usuario aquí,
-                        // ya sea reemplazando elementos existentes o creando nuevos.
-                    });
-            // Puedes seguir creando elementos para otros datos del servidor y categoría aquí
+                const tituloServidor = document.querySelector(".titulo-servidor");
+                tituloServidor.textContent = servidor.nombre;
+                obtenerCanales(this.id)
         });
             // Agregar los elementos al elemento "resultados" en el HTML
             anchorElement.appendChild(imageElement);
             resultadosDiv.appendChild(anchorElement);
         });
-    })    
+
+        const canalesh4 = document.querySelectorAll(".canales-clickleables");
+        canalesh4.forEach(function(canal) {
+            canal.addEventListener("click", function(event) {
+                event.preventDefault();
+                var id = this.id
+                console.log(id)
+                var parteNumerica = id.match(/\d+/);
+                var id_canal = parseInt(parteNumerica[0], 10);
+                obtenerMensajesDelCanal(id_canal);    
+                            });         
+                });
+    }) 
+
     .catch(error => {
         // Manejar el error en caso de que ocurra
         console.error("Error:", error);
-    });
-
-    
+    });   
 });
 
 
 
-function obtenerDatosDelCanal(servidor) {
-    // Realizar una solicitud GET a la URL deseada
-    return fetch("http://127.0.0.1:8000/canales/" + servidor.token, {
-        method: "GET",
-        credentials: "include" // Configura para incluir automáticamente las cookies si es necesario
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Error en la solicitud");
-        }
-        return response.json(); // Si esperas una respuesta JSON
-    })
-    .then(data => {
-        const tituloServidor = document.querySelector(".titulo-servidor");
-        tituloServidor.textContent = servidor.nombre;
-        const miDiv = document.querySelector(".lista-canales");
-        miDiv.innerHTML = "";
-        data[0].forEach(function(canal) {
-            const pElement = document.createElement("p");
-            pElement.textContent = "#"+canal.nombre;
-            miDiv.appendChild(pElement);
-        });
-        return data;
-    })
-    .catch(error => {
-        // Manejar el error en caso de que ocurra
-        console.error("Error:", error);
-    });
-}
 
 
 
