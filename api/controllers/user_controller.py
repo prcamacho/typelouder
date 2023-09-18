@@ -21,7 +21,6 @@ class UserController:
             fecha_nacimiento= request.form['fecha_nacimiento'],
             token= token)
         valid= User.create_user(user)
-        print(valid)
         url=str(request.url_root)+'confirmar_email/'+str(token)
         data={
             'url':url,
@@ -140,7 +139,6 @@ class UserController:
         lista=[]
         for user in users:
             lista.append(user.serialize())
-        print(lista)    
         return jsonify(lista , 200)    
             
          

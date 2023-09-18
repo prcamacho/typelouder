@@ -26,10 +26,11 @@ class CanalController:
         servidor= Servidor.get_servidor(Servidor(token=token_servidor))
         canales= Canal.get_canal_servidor(Canal(id_servidor=servidor.id))
         lista=[]
-        for canal in canales:
-            print(canal)
-            lista.append(canal.serialize())
-        return jsonify(lista, 200)
+        if canales:
+            for canal in canales:
+                lista.append(canal.serialize())
+            return jsonify(lista, 200)
+        return jsonify({'message':'No se obtuvieron canales'})
     
     @classmethod
     def get_all_canales(cls):

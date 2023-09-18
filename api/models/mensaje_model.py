@@ -43,7 +43,7 @@ class Mensaje:
         params=(canal.id,)
         results=conn.fetch_all(query,params)
         conn.close_connection()
-        if result is not None:
+        if results:
             lista_servidores=[]
             for result in results:
                 lista_servidores.append(Mensaje(id=result[0], id_usuario=result[1], id_canal=result[2], mensaje=result[3], fecha_mensaje=result[4]))
