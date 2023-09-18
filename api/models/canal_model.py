@@ -19,7 +19,7 @@ class Canal:
     @classmethod
     def create_canal(cls, canal):
         query='''INSERT INTO canales(nombre, id_servidor)
-                VALUES(%s,%s,%s)'''
+                VALUES(%s,%s)'''
         params=(canal.nombre, canal.id_servidor,)
         conn.execute_query(query,params)
         conn.close_connection()        

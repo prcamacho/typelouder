@@ -8,8 +8,7 @@ class MensajeController:
     @classmethod
     def create_mensaje(cls, id_canal):
         mensaje= request.form['mensaje']
-        #id_usuario= current_user.id
-        id_usuario= 1
+        id_usuario= current_user.id
         if mensaje:
             msj= Mensaje(id_usuario=id_usuario, id_canal=id_canal, mensaje=msj)    
             Mensaje.create_mensaje(msj)
