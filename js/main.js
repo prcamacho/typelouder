@@ -1,4 +1,3 @@
-import { obtenerMensajesDelCanal } from "./servidor/cargarMensajes.js";
 import { crearFormulario } from "./servidor/crearServidor.js";
 import { performFetch } from "./servidor/requestTemplate.js";
 import { obtenerCanales } from "./servidor/cargarCanales.js";
@@ -159,24 +158,40 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
                 const tituloServidor = document.querySelector(".titulo-servidor");
                 tituloServidor.textContent = servidor.nombre;
-                obtenerCanales(this.id)
+
+                    // const seccionDerecha = document.querySelector(".servidor-search");
+                    // seccionDerecha.innerHTML = "";
+                    // const divTituloCanal = document.createElement("div");
+                    // divTituloCanal.className = 'titulo-canal';
+                    // const seccionMensajes = document.createElement("div");
+                    // seccionMensajes.className = 'seccion-mensajes';
+                    // const mensajeBienvenida = document.createElement('p');
+                    // mensajeBienvenida.textContent = servidor.descripcion;
+                    // seccionMensajes.appendChild(mensajeBienvenida);
+                    // seccionDerecha.appendChild(divTituloCanal);
+                    // seccionDerecha.appendChild(seccionMensajes);
+                    cargarBienvenida(servidor.descripcion);
+                    obtenerCanales(this.id);
+                
         });
             // Agregar los elementos al elemento "resultados" en el HTML
             anchorElement.appendChild(imageElement);
             resultadosDiv.appendChild(anchorElement);
         });
 
-        const canalesh4 = document.querySelectorAll(".canales-clickleables");
-        canalesh4.forEach(function(canal) {
-            canal.addEventListener("click", function(event) {
-                event.preventDefault();
-                var id = this.id
-                console.log(id)
-                var parteNumerica = id.match(/\d+/);
-                var id_canal = parseInt(parteNumerica[0], 10);
-                obtenerMensajesDelCanal(id_canal);    
-                            });         
-                });
+        // const canalesh4 = document.querySelectorAll(".canales-clickleables");
+        // console.log(JSON.stringify(canalesh4));
+        // canalesh4.forEach(function(canal) {
+        //     hola.addEventListener("click", function(event) {
+        //         event.preventDefault();
+                
+        //         var id = this.id
+        //         console.log(id)
+        //         var parteNumerica = id.match(/\d+/);
+        //         var id_canal = parseInt(parteNumerica[0], 10);
+        //         obtenerMensajesDelCanal(id_canal);                 
+        //     });           
+        //          });
     }) 
 
     .catch(error => {
@@ -187,8 +202,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+function cargarBienvenida(descripcion){
+    const seccionDerecha = document.querySelector(".servidor-search");
+    seccionDerecha.innerHTML = "";
+    const divTituloCanal = document.createElement("div");
+    divTituloCanal.className = 'titulo-canal';
+    const seccionMensajes = document.createElement("div");
+    seccionMensajes.className = 'seccion-mensajes';
+    const mensajeBienvenida = document.createElement('p');
+    mensajeBienvenida.textContent = descripcion;
+    seccionMensajes.appendChild(mensajeBienvenida);
+    seccionDerecha.appendChild(divTituloCanal);
+    seccionDerecha.appendChild(seccionMensajes);
+}
+
+export { cargarBienvenida }
 
 
-
-
- 
