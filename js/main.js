@@ -1,24 +1,9 @@
 import { crearFormulario } from "./servidor/crearServidor.js";
 import { performFetch } from "./servidor/requestTemplate.js";
 import { obtenerCanales } from "./servidor/cargarCanales.js";
+import { cargarBienvenida } from "./servidor/cargarBienvenida.js";
 
 document.addEventListener("DOMContentLoaded", function () {
-    
-    // const h4h3Elements = document.querySelectorAll(".canales-clickleables");
-
-    // h4h3Elements.forEach(function(elementos) {
-    //     elementos.addEventListener("click", function() {
-    //         h4h3Elements.forEach(function(el) {
-    //             el.classList.remove("clicked");
-    //         });
-    //         this.classList.add("clicked");
-    //     });
-    // });
-
-
-
-
-    // Realizar una solicitud GET al servidor cuando la página se carga
 
     var tituloServidor = document.querySelector(".contenedor-titulo");
     var popupServidor = document.querySelector(".popup-servidor");
@@ -202,20 +187,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-function cargarBienvenida(descripcion){
-    const seccionDerecha = document.querySelector(".servidor-search");
-    seccionDerecha.innerHTML = "";
-    const divTituloCanal = document.createElement("div");
-    divTituloCanal.className = 'titulo-canal';
-    const seccionMensajes = document.createElement("div");
-    seccionMensajes.className = 'seccion-mensajes';
-    const mensajeBienvenida = document.createElement('p');
-    mensajeBienvenida.textContent = descripcion;
-    seccionMensajes.appendChild(mensajeBienvenida);
-    seccionDerecha.appendChild(divTituloCanal);
-    seccionDerecha.appendChild(seccionMensajes);
-}
 
-export { cargarBienvenida }
+
+
 
 

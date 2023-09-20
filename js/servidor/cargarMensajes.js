@@ -12,7 +12,7 @@ function obtenerMensajesDelCanal(id_canal) {
         });
     });
 
-    return fetch("http://127.0.0.1:8000/mensajes/" + id_canal, {
+    fetch("http://127.0.0.1:8000/mensajes/" + id_canal, {
         method: "GET",
         credentials: "include" // Configura para incluir automáticamente las cookies si es necesario
     })

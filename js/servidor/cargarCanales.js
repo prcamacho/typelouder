@@ -2,7 +2,7 @@ import { obtenerMensajesDelCanal } from "./cargarMensajes.js";
 
 function obtenerCanales(servidor_token) {
     // Realizar una solicitud GET a la URL deseada
-    return fetch("http://127.0.0.1:8000/canales/" + servidor_token, {
+    fetch("http://127.0.0.1:8000/canales/" + servidor_token, {
         method: "GET",
         credentials: "include" // Configura para incluir automáticamente las cookies si es necesario
     })
