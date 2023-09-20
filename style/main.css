@@ -122,10 +122,6 @@ html, body {
     background: var(--darkweb-b-3, #010a3d);
 }
 
-/* .seccion-media::-webkit-scrollbar {
-  width: 0 !important; /* Oculta las barras de desplazamiento en navegadores WebKit (Chrome, Safari, etc.)
-} */
-
 .contenedor-titulo{
     display: flex;
     justify-content: space-between;
@@ -292,6 +288,7 @@ hr{
   padding: 15px 0;
   margin: 0;
   text-align: center;
+  cursor: pointer;
 }
 
 .cerrar-sesion:hover{

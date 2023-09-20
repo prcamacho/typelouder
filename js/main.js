@@ -2,9 +2,12 @@ import { crearFormulario } from "./servidor/crearServidor.js";
 import { performFetch } from "./servidor/requestTemplate.js";
 import { obtenerCanales } from "./servidor/cargarCanales.js";
 import { cargarBienvenida } from "./servidor/cargarBienvenida.js";
+import { cargarUsuario } from "./user/cargarUsuario.js";
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
-
+    
     var tituloServidor = document.querySelector(".contenedor-titulo");
     var popupServidor = document.querySelector(".popup-servidor");
     var imagenFlecha = document.querySelector(".flecha");
@@ -143,18 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
                 const tituloServidor = document.querySelector(".titulo-servidor");
                 tituloServidor.textContent = servidor.nombre;
-
-                    // const seccionDerecha = document.querySelector(".servidor-search");
-                    // seccionDerecha.innerHTML = "";
-                    // const divTituloCanal = document.createElement("div");
-                    // divTituloCanal.className = 'titulo-canal';
-                    // const seccionMensajes = document.createElement("div");
-                    // seccionMensajes.className = 'seccion-mensajes';
-                    // const mensajeBienvenida = document.createElement('p');
-                    // mensajeBienvenida.textContent = servidor.descripcion;
-                    // seccionMensajes.appendChild(mensajeBienvenida);
-                    // seccionDerecha.appendChild(divTituloCanal);
-                    // seccionDerecha.appendChild(seccionMensajes);
                     cargarBienvenida(servidor.descripcion);
                     obtenerCanales(this.id);
                 
@@ -163,20 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
             anchorElement.appendChild(imageElement);
             resultadosDiv.appendChild(anchorElement);
         });
-
-        // const canalesh4 = document.querySelectorAll(".canales-clickleables");
-        // console.log(JSON.stringify(canalesh4));
-        // canalesh4.forEach(function(canal) {
-        //     hola.addEventListener("click", function(event) {
-        //         event.preventDefault();
-                
-        //         var id = this.id
-        //         console.log(id)
-        //         var parteNumerica = id.match(/\d+/);
-        //         var id_canal = parseInt(parteNumerica[0], 10);
-        //         obtenerMensajesDelCanal(id_canal);                 
-        //     });           
-        //          });
     }) 
 
     .catch(error => {
@@ -185,9 +162,26 @@ document.addEventListener("DOMContentLoaded", function () {
     });   
 });
 
+cargarUsuario();
 
+const cerrarSesion = document.querySelector(".cerrar-sesion");
 
+cerrarSesion.addEventListener("click", function (event) {
+    event.preventDefault();
 
+    fetch("http://127.0.0.1:8000/users/logout", {
+        method: "GET",
+        credentials: "include" // Configurar para incluir automáticamente las cookies
+    })
+    .then(response => {
+            window.location.href = "../page/index.html";
+
+    })
+    .catch(error => {
+        // Manejar el error en caso de que ocurra
+        console.error("Error:", error);
+    });
+});
 
 
 
