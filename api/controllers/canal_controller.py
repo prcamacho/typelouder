@@ -10,7 +10,6 @@ class CanalController:
     def create_canal(cls, token_servidor):
         nombre= request.form['nombre']
         servidor= Servidor.get_servidor(Servidor(token=token_servidor))
-        print(servidor.id)
         Canal.create_canal(Canal(nombre=nombre, id_servidor=servidor.id))
         return jsonify({'message':'Canal creado con exito'}, 200)
     

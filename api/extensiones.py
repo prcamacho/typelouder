@@ -11,7 +11,6 @@ login_manager= LoginManager()
         
 @login_manager.user_loader
 def load_user(user_id):
-    '''crea el usuario apto para el login'''
     query="SELECT * FROM usuarios WHERE id = %s"
     usuario = conn.fetch_one(query,(user_id,))
     conn.close_connection()

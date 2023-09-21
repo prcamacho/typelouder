@@ -9,6 +9,7 @@ from config import Config
 from flask import send_from_directory
 from api.routes.imagen_route import app_media
 from api.controllers.miembro_controller import MiembroController
+from api.models.canal_model import Canal
 
 class ServidorController:
     @classmethod
@@ -27,7 +28,9 @@ class ServidorController:
         servidor= Servidor(nombre=nombre, descripcion=descripcion,imagen=filename,privado=privado,
                                 password=password,token=token,id_usuario_creador=id_usuario_creador,id_categoria=id_categoria )    
         Servidor.create_servidor(servidor)
+        serv_creado = Servidor.get_servidor(Servidor(token=token))
         MiembroController.unirse_servidor(token)
+        Canal.create_canal(Canal(nombre='General',id_servidor=serv_creado.id))
         return jsonify({'message':'Servidor creado con exito'}, 200)
     
     @classmethod
