@@ -25,14 +25,12 @@ class Mensaje:
                 VALUES(%s,%s,%s,%s)'''
         params=(mensaje.id_usuario, mensaje.id_canal, mensaje.mensaje, mensaje.fecha_mensaje,)
         conn.execute_query(query,params)
-        conn.close_connection()        
         
     @classmethod    
     def get_mensaje(cls, mensaje):
         query='''SELECT * FROM mensajes WHERE id=%s'''
         params=(mensaje.id,)
         result=conn.fetch_one(query,params)
-        conn.close_connection()
         if result is not None:
             return Mensaje(id=result[0], id_usuario=result[1], id_canal=result[2], mensaje=result[3], fecha_mensaje=result[4])
         return None   
@@ -42,7 +40,6 @@ class Mensaje:
         query='''SELECT * FROM mensajes WHERE id_canal=%s'''
         params=(canal.id,)
         results=conn.fetch_all(query,params)
-        conn.close_connection()
         if results:
             lista_servidores=[]
             for result in results:
@@ -54,7 +51,6 @@ class Mensaje:
     def get_mensajes(cls):
         query='''SELECT * FROM mensajes'''
         results=conn.fetch_all(query)
-        conn.close_connection()
         if results is not None:
             lista_servidores=[]
             for result in results:
@@ -67,14 +63,12 @@ class Mensaje:
         query='''UPDATE mensajes SET mensaje=%s WHERE id=%s'''
         params=(mensaje.id,)
         conn.execute_query(query,params)
-        conn.close_connection()
     
     @classmethod
     def delete_mensaje(cls,mensaje):
         query='''DELETE FROM mensajes WHERE id=%s AND id_usuario=%s'''
         params= (mensaje.id, mensaje.id_usuario,)
         conn.execute_query(query, params)
-        conn.close_connection()
         
         
 class Reaccion:
@@ -90,11 +84,9 @@ class Reaccion:
                 VALUES (%s,%s,%s)'''
         params= (reaccion.reaccion, mensaje.id, mensaje.id_usuario,)
         conn.execute_query(query,params)                   
-        conn.close_connection() 
         
     @classmethod
     def update_reaccion(cls, reaccion):
         query= '''UPDATE reacciones SET reaccion= %s WHERE id=%s'''
         params= (reaccion.reaccion, reaccion.id,)
         conn.execute_query(query,params)
-        conn.close_connection()    

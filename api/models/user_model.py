@@ -41,14 +41,12 @@ class User(UserMixin):
         values (%s,%s,%s,%s,%s,%s,%s)'''
         params= (user.username,user.nombre,user.apellido,user.email,user.password,user.fecha_nacimiento,str(user.token),)
         conn.execute_query(query,params)
-        conn.close_connection()
         
     @classmethod
     def get_user(cls, user):
         query= '''SELECT * FROM usuarios WHERE id = %s'''
         params = (user.id,)
         result = conn.fetch_one(query, params) 
-        conn.close_connection()
         if result is not None:
             return User(
                 id = result[0], 
@@ -68,7 +66,6 @@ class User(UserMixin):
         query= '''SELECT * FROM usuarios WHERE email = %s'''
         params = (user.email,)
         result = conn.fetch_one(query, params) 
-        conn.close_connection()
         if result is not None:
             return User(
                 id = result[0], 
@@ -87,7 +84,6 @@ class User(UserMixin):
     def get_users(cls):
         query= '''SELECT * FROM usuarios'''
         results = conn.fetch_all(query) 
-        conn.close_connection()
         if results is not None:
             user_list=[]
             for result in results:
@@ -108,32 +104,27 @@ class User(UserMixin):
         query= '''UPDATE usuarios SET username=%s, nombre=%s, apellido=%s, token=%s WHERE id=%s'''
         params=(user.username,user.nombre,user.apellido,user.token,user.id,)
         conn.execute_query(query,params)   
-        conn.close_connection()
     
     @classmethod
     def reset_user_pass(cls,user):
         query= '''UPDATE usuarios SET password=%s, token=null WHERE token=%s'''
         params= (user.password,user.token,)
         conn.execute_query(query,params)
-        conn.close_connection
         
     @classmethod    
     def edit_password(cls, user):
         query= '''UPDATE usuarios SET password=%s WHERE id=%s'''
         params= (user.password,user.id,)
         conn.execute_query(query,params)
-        conn.close_connection
     
     @classmethod
     def activate_user(cls, user):
         query= 'UPDATE usuarios set activo=1, token=null where token=%s'
         params=(user.token,)
         conn.execute_query(query,params)
-        conn.close_connection()
         
     @classmethod
     def deactivate_user(cls, user):
         query= '''UPDATE usuarios set activo=0, token=%s WHERE id=%s'''
         params=(user.token,user.id,)
         conn.execute_query(query,params)
-        conn.close_connection()

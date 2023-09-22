@@ -22,11 +22,9 @@ class Miembro:
         query= 'INSERT INTO miembros (id_usuario, id_servidor) values(%s,%s)'
         params= (miembro.id_usuario, miembro.id_servidor,)
         conn.execute_query(query,params)
-        conn.close_connection()
         
     @classmethod
     def salir_servidor(cls, miembro):
         query= 'DELETE FROM miembros WHERE id_usuario=%s AND id_servidor=%s'
         params= (miembro.id_usuario, miembro.id_servidor,)
         conn.execute_query(query,params)
-        conn.close_connection()    

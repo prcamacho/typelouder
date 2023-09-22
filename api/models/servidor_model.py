@@ -43,14 +43,12 @@ class Servidor:
                 servidor.privado, servidor.password, servidor.token, 
                 servidor.id_usuario_creador, servidor.id_categoria)
         conn.execute_query(query,params)
-        conn.close_connection()        
     
     @classmethod    
     def get_servidor_id(cls, servidor):
         query='''SELECT * FROM servidores WHERE id=%s'''
         params=(servidor.id,)
         result=conn.fetch_one(query,params)
-        conn.close_connection()
         if result is not None:
             return Servidor(id=result[0], nombre=result[1], descripcion=result[2],
                             imagen=result[3], fecha_creacion=result[4], privado=result[5], password=result[6],
@@ -62,7 +60,6 @@ class Servidor:
         query='''SELECT * FROM servidores A INNER JOIN miembros B ON B.id_servidor = A.id INNER JOIN usuarios C ON B.id_usuario = C.id WHERE C.id=%s'''
         params=(user.id,)
         results=conn.fetch_all(query,params)
-        conn.close_connection()
         if results is not None:
             lista=[]
             for result in results:
@@ -77,7 +74,6 @@ class Servidor:
         query='''SELECT * FROM servidores WHERE token=%s'''
         params=(servidor.token,)
         result=conn.fetch_one(query,params)
-        conn.close_connection()
         if result is not None:
             return Servidor(id=result[0], nombre=result[1], descripcion=result[2],
                             imagen=result[3], fecha_creacion=result[4], privado=result[5], password=result[6],
@@ -88,7 +84,6 @@ class Servidor:
     def get_servidores(cls):
         query='''SELECT * FROM servidores'''
         results = conn.fetch_all(query)
-        conn.close_connection()
         if results is not None:
             lista_servidores=[]
             for result in results:
@@ -105,14 +100,12 @@ class Servidor:
         params=(servidor.nombre, servidor.descripcion, servidor.imagen, servidor.privado,
                 servidor.password, servidor.token, servidor.id_usuario_creador,)
         conn.execute_query(query,params)
-        conn.close_connection()
     
     @classmethod
     def delete_servidor(cls,servidor):
         query= '''DELETE FROM servidores WHERE token=%s AND id_usuario_creador=%s'''
         params= (servidor.token, servidor.id_usuario_creador,)
         conn.execute_query(query,params)
-        conn.close_connection()
         
 
 

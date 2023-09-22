@@ -39,7 +39,6 @@ class UserController:
         user= User.get_user_email(User(email=email))
         response = make_response(jsonify({'message': 'Login successful'}))
         response.set_cookie('authenticated', 'true')
-        print(response)
         #if user and check_password_hash(user.password, password) and user.activo:
         if user and check_password_hash(user.password, password):
             user=load_user(user.id)

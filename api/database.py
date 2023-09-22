@@ -29,13 +29,16 @@ class DatabaseConnection:
         cursor = cls.get_connection().cursor()
         cursor.execute("USE %s" %Config.CREDENCIALES_DB["database"])
         cursor.execute(query, params)
-        return cursor.fetchall()
+        results = cursor.fetchall()
+        cls.close_connection()
+        return results
 
     @classmethod
     def fetch_one(cls, query, params=None):
         cursor = cls.get_connection().cursor()
         cursor.execute("USE %s" %Config.CREDENCIALES_DB["database"])
-        result = cursor.execute(query, params)
+        cursor.execute(query,params)
+        result = cursor.fetchone()
         cls.close_connection()
         return result
 

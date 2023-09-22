@@ -14,7 +14,6 @@ class Categoria:
         query= '''SELECT * FROM categorias WHERE id =%s'''   
         params= (categoria.id,)
         categoria = conn.fetch_one(query,params)
-        conn.close_connection()
         if categoria:
             return Categoria(id=categoria[0],nombre=categoria[1],imagen=categoria[2])
         return None

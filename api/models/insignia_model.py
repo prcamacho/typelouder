@@ -14,7 +14,6 @@ class Insignia:
         query= '''SELECT * FROM insignias WHERE id =%s'''   
         params= (insignia.id,)
         insignia = conn.fetch_one(query,params)
-        conn.close_connection()
         if insignia:
             return Insignia(id=insignia[0],nombre=insignia[1],imagen=insignia[2])
         return None
