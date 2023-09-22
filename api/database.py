@@ -1,20 +1,25 @@
 import mysql.connector 
 from mysql.connector import errors
 from config import Config
+from contextlib import contextmanager
     
 class DatabaseConnection:
     _connection = None
     
     @classmethod
+    @contextmanager
     def get_connection(cls):
         if cls._connection is None:
             cls._connection = mysql.connector.connect(
                 host=Config.CREDENCIALES_DB["host"],
                 user=Config.CREDENCIALES_DB["user"],
-                port = Config.CREDENCIALES_DB["port"],
+                port=Config.CREDENCIALES_DB["port"],
                 password=Config.CREDENCIALES_DB["password"]
-                )
-        return cls._connection    
+            )
+        try:
+            yield cls._connection
+        finally:
+            cls.close_connection()   
     
     @classmethod
     def execute_query(cls, query, params=None):
@@ -26,17 +31,20 @@ class DatabaseConnection:
     
     @classmethod
     def fetch_all(cls, query, params=None):
-        cursor = cls.get_connection().cursor()
-        cursor.execute("USE %s" %Config.CREDENCIALES_DB["database"])
-        cursor.execute(query, params)
-        return cursor.fetchall()
+        with cls.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("USE %s" % Config.CREDENCIALES_DB["database"])
+            cursor.execute(query, params)
+            results = cursor.fetchall()
+        return results
 
     @classmethod
     def fetch_one(cls, query, params=None):
-        cursor = cls.get_connection().cursor()
-        cursor.execute("USE %s" %Config.CREDENCIALES_DB["database"])
-        result = cursor.execute(query, params)
-        cls.close_connection()
+        with cls.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("USE %s" % Config.CREDENCIALES_DB["database"])
+            cursor.execute(query, params)
+            result = cursor.fetchone()
         return result
 
     @classmethod
@@ -119,22 +127,18 @@ class DatabaseConnection:
                     FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE 
                     )'''
                     
-        try:
-            cursor = cls.get_connection().cursor()
-            cursor.execute(crear_database)
-            cursor.execute("USE %s" %Config.CREDENCIALES_DB["database"])
-            cursor.execute(tabla_insignias)
-            cursor.execute(tabla_usuarios)
-            cursor.execute(tabla_categorias)
-            cursor.execute(tabla_servidores)
-            cursor.execute(tabla_miembros)
-            cursor.execute(tabla_canales)
-            cursor.execute(tabla_mensajes)
-            cursor.execute(tabla_reacciones)
-            cls.close_connection()
-        except errors.DatabaseError as err:
-            print("Error al conectar o crear la base de datos.", err)
-            raise
+        with cls.get_connection() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(crear_database)
+                cursor.execute("USE %s" %Config.CREDENCIALES_DB["database"])
+                cursor.execute(tabla_insignias)
+                cursor.execute(tabla_usuarios)
+                cursor.execute(tabla_categorias)
+                cursor.execute(tabla_servidores)
+                cursor.execute(tabla_miembros)
+                cursor.execute(tabla_canales)
+                cursor.execute(tabla_mensajes)
+                cursor.execute(tabla_reacciones)
 
 def cargar_datos():
     DatabaseConnection.execute_query("""INSERT INTO insignias (nombre, imagen) VALUES
