@@ -1,4 +1,4 @@
-from flask import request, render_template, jsonify
+from flask import request, render_template, jsonify, make_response
 from config import Config 
 from ..models.user_model import User
 import uuid
@@ -37,11 +37,14 @@ class UserController:
         email = request.form['email']
         password = request.form['password']
         user= User.get_user_email(User(email=email))
+        response = make_response(jsonify({'message': 'Login successful'}))
+        response.set_cookie('authenticated', 'true')
+        print(response)
         #if user and check_password_hash(user.password, password) and user.activo:
         if user and check_password_hash(user.password, password):
             user=load_user(user.id)
             login_user(user)
-            return jsonify({'message':'Login exitoso'}, 200)
+            return response
 
     @classmethod        
     def confirmar_email(cls,token):
@@ -52,7 +55,9 @@ class UserController:
     @classmethod
     def logout(cls):
         logout_user()
-        return jsonify({'message':'Logout exitoso'}, 200)         
+        response = make_response(jsonify({'message': 'Logout successful'}))
+        response.set_cookie('authenticated', '', expires=0)
+        return response        
     
     @classmethod
     def password_reset(cls):
