@@ -7,13 +7,20 @@ class DatabaseConnection:
     
     @classmethod
     def get_connection(cls):
+        # if cls._connection is None:
+        #     cls._connection = mysql.connector.connect(
+        #         host=Config.CREDENCIALES_DB["host"],
+        #         user=Config.CREDENCIALES_DB["user"],
+        #         port = Config.CREDENCIALES_DB["port"],
+        #         password=Config.CREDENCIALES_DB["password"]
+        #         )
         if cls._connection is None:
             cls._connection = mysql.connector.connect(
-                host=Config.CREDENCIALES_DB["host"],
-                user=Config.CREDENCIALES_DB["user"],
-                port = Config.CREDENCIALES_DB["port"],
-                password=Config.CREDENCIALES_DB["password"]
-                )
+                host="db4free.net",
+                user="daniel92",
+                port = 3306,
+                password= "Cafayate123"
+                )    
         return cls._connection    
     
     @classmethod
@@ -124,6 +131,11 @@ class DatabaseConnection:
                     
         try:
             cursor = cls.get_connection().cursor()
+        #     # Establece max_allowed_packet en 1 GB (1073741824 bytes)
+        #     cursor.execute("SET GLOBAL max_allowed_packet=1073741824;")
+
+        # # Establece wait_timeout en 300 segundos (5 minutos)
+        #     cursor.execute("SET GLOBAL wait_timeout = 300;")
             cursor.execute(crear_database)
             cursor.execute("USE %s" %Config.CREDENCIALES_DB["database"])
             cursor.execute(tabla_insignias)

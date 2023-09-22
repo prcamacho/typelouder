@@ -58,9 +58,11 @@ class ServidorController:
     def get_all_servidores(cls):
         servidores= Servidor.get_servidores()
         lista=[]
-        for servidor in servidores:
-            lista.append(servidor.serialize())
-        return jsonify(lista, 200)
+        if servidores is not None:
+            for servidor in servidores:
+                lista.append(servidor.serialize())
+            return jsonify(lista, 200)
+        return jsonify({'message':'No hay servidores'})
     
     @classmethod
     def update_servidor(cls, token):

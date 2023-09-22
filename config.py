@@ -12,7 +12,7 @@ class Config:
     CREDENCIALES_DB = {'user': 'root',
                 'password': 'Cafayate123',
                 'host': 'localhost',
-                'database': 'typelouder',
+                'database': 'typeloader',
                 'port':'3306'}   
     
     SECRET_KEY='75958d0dea3aaaf05db37d404e788ff3faaabc733af0560f5f05552a7f6b25de'
