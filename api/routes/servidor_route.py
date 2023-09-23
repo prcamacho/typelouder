@@ -9,4 +9,5 @@ app_servidor.route('/',methods=['GET'])(ServidorController.get_servidores_user)
 app_servidor.route('/all',methods=['GET'])(ServidorController.get_all_servidores)
 app_servidor.route('/editar/<token>',methods=['PUT'])(ServidorController.update_servidor)
 app_servidor.route('/eliminar/<token>',methods=['DELETE'])(ServidorController.delete_servidor)
+app_servidor.route('/like',methods=['GET'])(ServidorController.get_servidores_like)
 

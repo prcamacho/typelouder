@@ -7,20 +7,20 @@ class DatabaseConnection:
     
     @classmethod
     def get_connection(cls):
-        # if cls._connection is None:
-        #     cls._connection = mysql.connector.connect(
-        #         host=Config.CREDENCIALES_DB["host"],
-        #         user=Config.CREDENCIALES_DB["user"],
-        #         port = Config.CREDENCIALES_DB["port"],
-        #         password=Config.CREDENCIALES_DB["password"]
-        #         )
         if cls._connection is None:
             cls._connection = mysql.connector.connect(
-                host="db4free.net",
-                user="daniel92",
-                port = 3306,
-                password= "Cafayate123"
-                )    
+                host=Config.CREDENCIALES_DB["host"],
+                user=Config.CREDENCIALES_DB["user"],
+                port = Config.CREDENCIALES_DB["port"],
+                password=Config.CREDENCIALES_DB["password"]
+                )
+        # if cls._connection is None:
+        #     cls._connection = mysql.connector.connect(
+        #         host="db4free.net",
+        #         user="daniel92",
+        #         port = 3306,
+        #         password= "Cafayate123"
+        #         )    
         return cls._connection    
     
     @classmethod

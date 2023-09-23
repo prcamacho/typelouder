@@ -10,6 +10,7 @@ from flask import send_from_directory
 from api.routes.imagen_route import app_media
 from api.controllers.miembro_controller import MiembroController
 from api.models.canal_model import Canal
+import math
 
 class ServidorController:
     @classmethod
@@ -56,13 +57,30 @@ class ServidorController:
     
     @classmethod
     def get_all_servidores(cls):
+        pagina = int(request.args.get('pagina', 1))
+        elementos_pagina = 11
+        inicio = (pagina - 1) * elementos_pagina
+        fin = inicio + elementos_pagina
         servidores= Servidor.get_servidores()
+        lista=[]
+        if servidores is not None:
+            for servidor in servidores:
+                lista.append(servidor.serialize())   
+            return jsonify(lista[inicio:fin],math.ceil(len(lista)/elementos_pagina), 200)
+        return jsonify({'message':'No hay servidores'})
+    
+    @classmethod
+    def get_servidores_like(cls):
+        nombre_servidor = request.args.get('q', '')
+        print(nombre_servidor)
+        servidores = Servidor.get_servidores_like(nombre_servidor)
         lista=[]
         if servidores is not None:
             for servidor in servidores:
                 lista.append(servidor.serialize())
             return jsonify(lista, 200)
         return jsonify({'message':'No hay servidores'})
+        
     
     @classmethod
     def update_servidor(cls, token):

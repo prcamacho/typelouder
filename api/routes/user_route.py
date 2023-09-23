@@ -14,4 +14,5 @@ app_usuario.route('/editar_password',methods=['PUT'])(UserController.edit_passwo
 app_usuario.route('/desactivar_cuenta',methods=['PUT'])(UserController.desactivar_cuenta)
 app_usuario.route('/activar_cuenta',methods=['PUT'])(UserController.activar_cuenta)
 app_usuario.route('/',methods=['GET'])(UserController.usuario)
+#app_usuario.route('/<int:id>', method=['GET'])(UserController.usuario_id)
 app_usuario.route('/all',methods=['GET'])(UserController.lista_usuarios)

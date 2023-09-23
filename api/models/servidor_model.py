@@ -81,6 +81,20 @@ class Servidor:
         return None   
     
     @classmethod
+    def get_servidores_like(cls, nombre_servidor):
+        query= "SELECT * FROM servidores WHERE nombre LIKE %s "
+        params= (f"%{nombre_servidor}%",)
+        results= conn.fetch_all(query, params)
+        if results is not None:
+            lista_servidores=[]
+            for result in results:
+                lista_servidores.append(Servidor(id=result[0], nombre=result[1], descripcion=result[2],
+                            imagen=result[3], fecha_creacion=result[4], privado=result[5], password=result[6],
+                            token=result[7], id_usuario_creador=result[8], id_categoria=result[9]))
+            return lista_servidores    
+        return None   
+        
+    @classmethod
     def get_servidores(cls):
         query='''SELECT * FROM servidores'''
         results = conn.fetch_all(query)
