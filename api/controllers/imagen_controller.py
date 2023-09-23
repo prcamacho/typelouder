@@ -5,5 +5,9 @@ from config import Config
 class ImagenController:
     
     @classmethod
-    def imagen_media(cls,filename):
+    def imagen_media_servidor(cls,filename):
         return send_from_directory('../'+Config.MEDIA_SERVIDOR,filename)
+    
+    @classmethod
+    def imagen_media_user(cls,filename):
+        return send_from_directory('../'+Config.MEDIA_USER,filename)

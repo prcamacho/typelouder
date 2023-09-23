@@ -25,7 +25,7 @@ class MensajeController:
     def get_mensajes_canal(cls, id_canal):
         mensajes= Mensaje.get_mensaje_canal(Canal(id=id_canal))
         lista=[]
-        if mensajes:
+        if mensajes is not None:
             for mensaje in mensajes:
                 lista.append(mensaje.serialize())
             return jsonify(lista, 200)

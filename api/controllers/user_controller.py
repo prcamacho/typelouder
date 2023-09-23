@@ -20,7 +20,7 @@ class UserController:
             password= password_hash,
             fecha_nacimiento= request.form['fecha_nacimiento'],
             token= token)
-        valid= User.create_user(user)
+        User.create_user(user)
         url=str(request.url_root)+'confirmar_email/'+str(token)
         data={
             'url':url,

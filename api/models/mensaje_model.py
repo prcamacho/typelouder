@@ -43,7 +43,7 @@ class Mensaje:
         if results:
             lista_servidores=[]
             for result in results:
-                lista_servidores.append(Mensaje(id=result[0], id_usuario=result[1], id_canal=result[2], mensaje=result[3], fecha_mensaje=result[4]))
+                lista_servidores.append(Mensaje(id=result[0], id_usuario=result[2], id_canal=result[1], mensaje=result[3], fecha_mensaje=result[4]))
             return lista_servidores  
         return None  
     
@@ -54,7 +54,7 @@ class Mensaje:
         if results is not None:
             lista_servidores=[]
             for result in results:
-                lista_servidores.append(Mensaje(id=result[0], id_usuario=result[1], id_canal=result[2], mensaje=result[3], fecha_mensaje=result[4]))
+                lista_servidores.append(Mensaje(id=result[0], id_usuario=result[2], id_canal=result[1], mensaje=result[3], fecha_mensaje=result[4]))
             return lista_servidores    
         return None   
     

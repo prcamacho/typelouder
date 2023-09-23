@@ -71,9 +71,10 @@ class DatabaseConnection:
                     email VARCHAR(255) UNIQUE NOT NULL,
                     password VARCHAR(255) NOT NULL,
                     fecha_nacimiento DATE NOT NULL,
+                    imagen VARCHAR(255) DEFAULT ('default.png'),
                     activo TINYINT NOT NULL DEFAULT(0),
                     token VARCHAR(100),
-                    id_insignia INT,
+                    id_insignia INT DEFAULT (1),
                     FOREIGN KEY (id_insignia) REFERENCES insignias(id)  
                     )'''
         tabla_categorias='''CREATE TABLE IF NOT EXISTS categorias(

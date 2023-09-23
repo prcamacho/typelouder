@@ -51,7 +51,7 @@ class ServidorController:
         lista=[]
         for servidor in servidores:
             servidor_data= servidor.serialize()
-            servidor_data['imagen'] =  str(request.url_root)+url_for(endpoint='media.imagen_media', filename= servidor_data['imagen'])
+            servidor_data['imagen'] =  str(request.url_root)+url_for(endpoint='media.imagen_media_servidor', filename= servidor_data['imagen'])
             lista.append(servidor_data)
         return jsonify(lista, 200)
     
