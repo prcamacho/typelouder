@@ -8,6 +8,7 @@ class Insignia:
         
     def serialize(self):
         return self.__dict__
+        
     
     @classmethod
     def get_insignia(cls, insignia):

@@ -1,6 +1,7 @@
 from api.database import DatabaseConnection as conn
 from api.models.categoria_model import Categoria
 from api.models.user_model import User
+from flask import request, url_for
 
 class Servidor:
     def __init__(self, **kwargs):
@@ -20,7 +21,7 @@ class Servidor:
             'id':self.id,
             'nombre':self.nombre,
             'descripcion':self.descripcion,
-            'imagen':self.imagen,
+            'imagen':str(request.url_root)+url_for(endpoint='media.imagen_media_servidor', filename= self.imagen),
             'fecha_creacion':self.fecha_creacion,
             'privado':self.privado,
             'token':self.token,

@@ -1,4 +1,4 @@
-from flask import request, render_template, jsonify, make_response
+from flask import request, render_template, jsonify, make_response, url_for
 from config import Config 
 from ..models.user_model import User
 import uuid
@@ -135,14 +135,20 @@ class UserController:
     @classmethod
     def usuario(cls):
         user= User.get_user(User(id=current_user.id))
-        return jsonify(user.serialize()) 
+        if user is not None:
+            user_data=user.serialize()
+            #user_data['imagen'] =  str(request.url_root)+url_for(endpoint='media.imagen_media_user', filename= user_data['imagen'])
+            return jsonify(user_data)
+        return jsonify({'message':'Usuario no encontrado'}) 
     
     @classmethod
     def lista_usuarios(cls):
         users= User.get_users()
         lista=[]
         for user in users:
-            lista.append(user.serialize())
+            user_data=user.serialize()
+            #user_data['imagen'] =  str(request.url_root)+url_for(endpoint='media.imagen_media_user', filename= user_data['imagen'])
+            lista.append(user_data)
         return jsonify(lista , 200)    
             
          

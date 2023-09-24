@@ -1,6 +1,7 @@
 from api.database import DatabaseConnection as conn
 from api.models.user_model import User
 from api.models.canal_model import Canal
+from datetime import datetime
 
 class Mensaje:
     def __init__(self, **kwargs):
@@ -16,7 +17,7 @@ class Mensaje:
             'usuario':User.get_user(User(id=self.id_usuario)).serialize_basico(),
             'canal':Canal.get_canal(Canal(id=self.id_canal)).serialize(),
             'mensaje':self.mensaje,
-            'fecha_mensaje':self.fecha_mensaje
+            'fecha_mensaje':self.fecha_mensaje.strftime("%d/%m/%y %H:%M")
         }
     
     @classmethod
