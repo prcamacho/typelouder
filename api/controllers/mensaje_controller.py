@@ -24,6 +24,7 @@ class MensajeController:
     @classmethod
     def get_mensajes_canal(cls, id_canal):
         mensajes= Mensaje.get_mensaje_canal(Canal(id=id_canal))
+        mensajes.reverse()
         lista=[]
         if mensajes is not None:
             for mensaje in mensajes:
