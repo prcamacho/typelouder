@@ -38,7 +38,9 @@ class DatabaseConnection:
         cursor.execute(query, params)
         results = cursor.fetchall()
         cls.close_connection()
-        return results
+        if results != []:
+            return results
+        return None
 
     @classmethod
     def fetch_one(cls, query, params=None):

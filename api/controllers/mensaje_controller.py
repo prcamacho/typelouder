@@ -24,13 +24,13 @@ class MensajeController:
     @classmethod
     def get_mensajes_canal(cls, id_canal):
         mensajes= Mensaje.get_mensaje_canal(Canal(id=id_canal))
-        mensajes.reverse()
         lista=[]
         if mensajes is not None:
+            mensajes.reverse()
             for mensaje in mensajes:
                 lista.append(mensaje.serialize())
             return jsonify(lista, 200)
-        return jsonify({'message':'No hay mensajes'})
+        return jsonify({'message':'No hay mensajes'},404)
     
     @classmethod
     def get_all_mensajes(cls):
