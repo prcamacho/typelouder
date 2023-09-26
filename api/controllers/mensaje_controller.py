@@ -43,8 +43,7 @@ class MensajeController:
     @classmethod
     def update_mensaje(cls, id):
         mensaje= request.form['mensaje']
-        #id_usuario= current_user.id
-        id_usuario=1
+        id_usuario= current_user.id
         msj= Mensaje(id=id, id_usuario=id_usuario, mensaje=mensaje)    
         Mensaje.update_mensaje(msj)
         return jsonify({'message':'Mensaje editado con exito'}, 200)
@@ -52,19 +51,15 @@ class MensajeController:
     @classmethod
     def delete_mensaje(cls, id):
         mensaje= Mensaje.get_mensaje(Mensaje(id=id))
-        #mensaje.id_usuario= current_user.id
-        id_usuario=2
-        mensaje.id_usuario=id_usuario
-        #if mensaje and mensaje.id_usuario == current_user.id:
-        if mensaje:
+        mensaje.id_usuario= current_user.id
+        if mensaje and mensaje.id_usuario == current_user.id:
             Mensaje.delete_mensaje(mensaje)
             return jsonify({'message':'Mensaje eliminado'}, 200)
         return jsonify({'message':'No es posible eliminar el mensaje'})
     
     @classmethod
     def reaccionar(cls, id_mensaje):
-        #id_usuario=current_user.id
-        id_usuario=1
+        id_usuario=current_user.id
         reaccion= 'true'== request.form['raccion']
         mensaje=Mensaje(id=id_mensaje, id_usuario=id_usuario)
         Reaccion.reaccionar(Reaccion(reaccion=reaccion),mensaje)

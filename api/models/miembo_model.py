@@ -28,3 +28,12 @@ class Miembro:
         query= 'DELETE FROM miembros WHERE id_usuario=%s AND id_servidor=%s'
         params= (miembro.id_usuario, miembro.id_servidor,)
         conn.execute_query(query,params)
+        
+    @classmethod
+    def es_miembro(cls,miembro):
+        query= 'SELECT * FROM miembros WHERE id_usuario=%s AND id_servidor=%s'
+        params= (miembro.id_usuario, miembro.id_servidor,)
+        es_miembro= conn.fetch_one(query, params)
+        if es_miembro is not None:
+            return True
+        return False   

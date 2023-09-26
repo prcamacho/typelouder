@@ -91,6 +91,7 @@ class UserController:
         username= request.form['username']
         nombre= request.form['nombre']
         apellido= request.form['apellido']
+
         user= User(id=current_user.id,username=username,nombre=nombre,apellido=apellido)
         User.update_user(user)
         return jsonify({'message':'Usuario actualizado con éxito!'},200)
