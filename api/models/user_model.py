@@ -109,8 +109,8 @@ class User(UserMixin):
         
     @classmethod
     def update_user(cls, user):
-        query= '''UPDATE usuarios SET username=%s, nombre=%s, apellido=%s, token=%s WHERE id=%s'''
-        params=(user.username,user.nombre,user.apellido,user.token,user.id,)
+        query= '''UPDATE usuarios SET username=%s, nombre=%s, apellido=%s, imagen=%s WHERE id=%s'''
+        params=(user.username,user.nombre,user.apellido,user.imagen,user.id,)
         conn.execute_query(query,params)   
     
     @classmethod

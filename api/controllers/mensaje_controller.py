@@ -10,7 +10,7 @@ class MensajeController:
         mensaje= request.form['mensaje']
         id_usuario= current_user.id
         if mensaje:
-            msj= Mensaje(id_usuario=id_usuario, id_canal=id_canal, mensaje=msj)    
+            msj= Mensaje(id_usuario=id_usuario, id_canal=id_canal, mensaje=mensaje)    
             Mensaje.create_mensaje(msj)
             return jsonify({'message':'Mensaje creado con exito'}, 200)
     

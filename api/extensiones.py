@@ -3,11 +3,14 @@ from flask_login import LoginManager
 from .database import DatabaseConnection as conn
 from .models.user_model import User
 from config import Config
+#from flask_socketio import SocketIO
 import os
 
 MAIL= Mail()
 
 login_manager= LoginManager()
+
+#socketio = SocketIO()
         
 @login_manager.user_loader
 def load_user(user_id):

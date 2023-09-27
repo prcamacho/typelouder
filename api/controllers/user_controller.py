@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from api.extensiones import MAIL, load_user
 from flask_mail import Message
 from flask_login import login_user, logout_user, current_user
+from api.models.imagen_model import Imagen
 
 class UserController:
     @classmethod
@@ -88,11 +89,15 @@ class UserController:
         
     @classmethod
     def edit_user(cls):
+        # if request.method == 'PUT':
         username= request.form['username']
         nombre= request.form['nombre']
-        apellido= request.form['apellido']
-
-        user= User(id=current_user.id,username=username,nombre=nombre,apellido=apellido)
+        apellido= request.form['apellido'] 
+        imagen= request.files['imagen']
+        print("hola")
+        print(username,nombre,apellido,imagen.filename)
+        filename = Imagen.guardar_imagen(imagen,request,Config.MEDIA_USER,(250,250))
+        user= User(id=current_user.id,username=username,nombre=nombre,apellido=apellido, imagen=filename)
         User.update_user(user)
         return jsonify({'message':'Usuario actualizado con éxito!'},200)
         

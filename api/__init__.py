@@ -8,6 +8,7 @@ from api.routes.imagen_route import app_media
 from config import Config
 from flask_login import login_required
 from flask_cors import CORS
+
     
 typelouder = Flask(__name__, static_folder=Config.STATIC_FOLDER, template_folder=Config.TEMPLATE_FOLDER)
 CORS(typelouder, supports_credentials=True)
@@ -29,6 +30,12 @@ typelouder.register_blueprint(app_mensaje)
 typelouder.register_blueprint(app_canal)
 typelouder.register_blueprint(app_miembro)
 typelouder.register_blueprint(app_media)
+
+# def after_request(response):
+#     response.headers.add('Access-Control-Allow-Origin', 'http://localhost:8000')  # Reemplaza 'http://tudominio.com' con el origen de tu aplicación
+#     response.headers.add('Access-Control-Allow-Methods', 'PUT, OPTIONS')  # Permite PUT y OPTIONS
+#     response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+#     return response
 
 @typelouder.route('/')
 @login_required

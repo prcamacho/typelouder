@@ -22,9 +22,9 @@ class Mensaje:
     
     @classmethod
     def create_mensaje(cls, mensaje):
-        query='''INSERT INTO mensajes(id_usuario, id_canal, mensaje, fecha_mensaje)
-                VALUES(%s,%s,%s,%s)'''
-        params=(mensaje.id_usuario, mensaje.id_canal, mensaje.mensaje, mensaje.fecha_mensaje,)
+        query='''INSERT INTO mensajes(id_usuario, id_canal, mensaje)
+                VALUES(%s,%s,%s)'''
+        params=(mensaje.id_usuario, mensaje.id_canal, mensaje.mensaje,)
         conn.execute_query(query,params)
         
     @classmethod    
