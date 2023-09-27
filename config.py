@@ -10,7 +10,7 @@ class Config:
     PORT=8000
     
     CREDENCIALES_DB = {'user': 'root',
-                'password': 'Cafayate123',
+                'password': 'fidoloco1',
                 'host': 'localhost',
                 'database': 'typelouder',
                 'port':'3306'}   

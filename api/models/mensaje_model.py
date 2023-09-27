@@ -62,7 +62,7 @@ class Mensaje:
     @classmethod
     def update_mensaje(cls,mensaje):
         query='''UPDATE mensajes SET mensaje=%s WHERE id=%s'''
-        params=(mensaje.id,)
+        params=(mensaje.mensaje,mensaje.id)
         conn.execute_query(query,params)
     
     @classmethod
