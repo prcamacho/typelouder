@@ -48,12 +48,14 @@ class ServidorController:
     @classmethod
     def get_servidores_user(cls):
         servidores= Servidor.get_servidores_user(User(id=current_user.id))
-        lista=[]
-        for servidor in servidores:
-            servidor_data= servidor.serialize()
-            #servidor_data['imagen'] =  str(request.url_root)+url_for(endpoint='media.imagen_media_servidor', filename= servidor_data['imagen'])
-            lista.append(servidor_data)
-        return jsonify(lista, 200)
+        print(servidores)
+        if servidores:
+            lista=[]
+            for servidor in servidores:
+                servidor_data= servidor.serialize()
+                lista.append(servidor_data)
+            return jsonify(lista,200)
+        return jsonify({'message':'No hay servidores'}, 404)
     
     @classmethod
     def get_all_servidores(cls):
@@ -65,7 +67,7 @@ class ServidorController:
         lista=[]
         if servidores is not None:
             for servidor in servidores:
-                lista.append(servidor.serialize())   
+                lista.append([servidor[0].serialize(),servidor[1]]) 
             return jsonify(lista[inicio:fin],math.ceil(len(lista)/elementos_pagina), 200)
         return jsonify({'message':'No hay servidores'})
     
@@ -77,7 +79,7 @@ class ServidorController:
         lista=[]
         if servidores is not None:
             for servidor in servidores:
-                lista.append(servidor.serialize())
+                lista.append([servidor[0].serialize(),servidor[1]])
             return jsonify(lista, 200)
         return jsonify({'message':'No hay servidores'})
         
