@@ -45,6 +45,7 @@ class UserController:
             user=load_user(user.id)
             login_user(user)
             return response
+        
 
     @classmethod        
     def confirmar_email(cls,token):
@@ -89,13 +90,10 @@ class UserController:
         
     @classmethod
     def edit_user(cls):
-        # if request.method == 'PUT':
         username= request.form['username']
         nombre= request.form['nombre']
         apellido= request.form['apellido'] 
         imagen= request.files['imagen']
-        print("hola")
-        print(username,nombre,apellido,imagen.filename)
         filename = Imagen.guardar_imagen(imagen,request,Config.MEDIA_USER,(250,250))
         user= User(id=current_user.id,username=username,nombre=nombre,apellido=apellido, imagen=filename)
         User.update_user(user)
