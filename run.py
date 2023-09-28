@@ -2,7 +2,7 @@ from api import typelouder
 from api.database import DatabaseConnection
 from config import Config
 from api.extensiones import MAIL, login_manager, rutas_media
-from api.database import cargar_datos
+#from api.database import cargar_datos
 #from api.events import socketio
 
 #inicia la aplicacion
