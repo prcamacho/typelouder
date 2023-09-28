@@ -5,6 +5,7 @@ from api.routes.mensaje_route import app_mensaje
 from api.routes.canal_route import app_canal
 from api.routes.miembro_route import app_miembro
 from api.routes.imagen_route import app_media
+from api.routes.categorias_route import app_categoria
 from config import Config
 from flask_login import login_required
 from flask_cors import CORS
@@ -30,6 +31,7 @@ typelouder.register_blueprint(app_mensaje)
 typelouder.register_blueprint(app_canal)
 typelouder.register_blueprint(app_miembro)
 typelouder.register_blueprint(app_media)
+typelouder.register_blueprint(app_categoria)
 
 # def after_request(response):
 #     response.headers.add('Access-Control-Allow-Origin', 'http://localhost:8000')  # Reemplaza 'http://tudominio.com' con el origen de tu aplicación

@@ -17,3 +17,14 @@ class Categoria:
         if categoria:
             return Categoria(id=categoria[0],nombre=categoria[1],imagen=categoria[2])
         return None
+    
+    @classmethod
+    def get_categorias(cls):
+        query= '''SELECT * FROM categorias'''   
+        categorias = conn.fetch_all(query)
+        if categorias is not None:
+            lista=[]
+            for categoria in categorias:
+                lista.append(Categoria(id=categoria[0],nombre=categoria[1],imagen=categoria[2]))
+            return lista
+        return None
