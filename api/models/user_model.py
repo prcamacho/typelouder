@@ -2,6 +2,7 @@ from flask_login import UserMixin
 from api.database import DatabaseConnection as conn
 from api.models.insignia_model import Insignia
 from flask import request, url_for
+from api.models.exceptions import NotFound, InvalidDataError
 
 class User(UserMixin):
     def __init__(self, **kwargs):
@@ -64,7 +65,7 @@ class User(UserMixin):
                 activo = result[8],
                 id_insignia = result[10]
                 )
-        return None    
+        raise NotFound("Usuario no encontrado", "El usuario no existe")
     
     @classmethod
     def get_user_email(cls, user):

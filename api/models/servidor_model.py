@@ -2,6 +2,9 @@ from api.database import DatabaseConnection as conn
 from api.models.categoria_model import Categoria
 from api.models.user_model import User
 from flask import request, url_for
+from api.models.exceptions import NotFound, InvalidDataError
+import re
+
 
 class Servidor:
     def __init__(self, **kwargs):
@@ -37,6 +40,19 @@ class Servidor:
     
     @classmethod
     def create_servidor(cls, servidor):
+        if None in [servidor.nombre, servidor.descripcion]:
+            raise InvalidDataError("Datos faltantes", "Debe completar todos los campos")
+
+            # Si el servidor es privado, verificar que se proporcione la contraseña
+        if servidor.privado:
+            if servidor.password is None:
+                raise InvalidDataError("Contraseña faltante", "El servidor es privado y se requiere una contraseña")
+
+            # Verificar si la contraseña cumple con los criterios
+            if not re.match(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$', servidor.password):
+                raise InvalidDataError("Contraseña inválida",
+                                       "La contraseña debe tener al menos 8 caracteres, un número y un carácter especial")
+
         query='''INSERT INTO servidores(nombre, descripcion, imagen, 
                 privado, password, token, id_usuario_creador, id_categoria)
                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s)'''
@@ -54,21 +70,22 @@ class Servidor:
             return Servidor(id=result[0], nombre=result[1], descripcion=result[2],
                             imagen=result[3], fecha_creacion=result[4], privado=result[5], password=result[6],
                             token=result[7], id_usuario_creador=result[8], id_categoria=result[9])
-        return None    
+        raise NotFound("Servidor no encontrado", "El servidor con el ID proporcionado no existe")
     
     @classmethod    
     def get_servidores_user(cls, user):
         query='''SELECT * FROM servidores A INNER JOIN miembros B ON B.id_servidor = A.id INNER JOIN usuarios C ON B.id_usuario = C.id WHERE C.id=%s'''
         params=(user.id,)
         results=conn.fetch_all(query,params)
-        if results is not None:
-            lista=[]
+        if results is not None and len(results) > 0:
+            lista = []
             for result in results:
                 lista.append(Servidor(id=result[0], nombre=result[1], descripcion=result[2],
-                            imagen=result[3], fecha_creacion=result[4], privado=result[5], password=result[6],
-                            token=result[7], id_usuario_creador=result[8], id_categoria=result[9]))
-            return lista    
-        return None 
+                                      imagen=result[3], fecha_creacion=result[4], privado=result[5], password=result[6],
+                                      token=result[7], id_usuario_creador=result[8], id_categoria=result[9]))
+            return lista
+        else:
+            raise NotFound("No se encontraron servidores para el usuario", "El usuario no está unido a ningún servidor")
         
     @classmethod    
     def get_servidor(cls, servidor):
@@ -79,7 +96,7 @@ class Servidor:
             return Servidor(id=result[0], nombre=result[1], descripcion=result[2],
                             imagen=result[3], fecha_creacion=result[4], privado=result[5], password=result[6],
                             token=result[7], id_usuario_creador=result[8], id_categoria=result[9])
-        return None   
+        raise NotFound("Servidor no encontrado", "El servidor no existe")
     
     @classmethod
     def get_servidores_like(cls, nombre_servidor):
@@ -126,8 +143,9 @@ class Servidor:
                 lista_servidores.append([Servidor(id=result[0], nombre=result[1], descripcion=result[2],
                             imagen=result[3], fecha_creacion=result[4], privado=result[5], password=result[6],
                             token=result[7], id_usuario_creador=result[8], id_categoria=result[9]),result[10]])
-            return lista_servidores    
-        return None   
+            return lista_servidores
+        else:
+            raise NotFound("No se encontraron servidores", "Todavía no se han creado servidores")
     
     @classmethod
     def update_servidor(cls,servidor):

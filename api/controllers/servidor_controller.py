@@ -11,6 +11,9 @@ from api.routes.imagen_route import app_media
 from api.controllers.miembro_controller import MiembroController
 from api.models.canal_model import Canal
 import math
+from api.models.exceptions import NotFound, InvalidDataError
+import re
+
 
 class ServidorController:
     @classmethod
@@ -24,8 +27,23 @@ class ServidorController:
         id_usuario_creador= current_user.id
         token=str(uuid.uuid4())  
         filename = Imagen.guardar_imagen(imagen,request,Config.MEDIA_SERVIDOR,(250,250))
+        if not nombre or not descripcion or not imagen or not id_categoria:
+            raise InvalidDataError("Parámetros faltantes",
+                                   "Asegúrate de proporcionar nombre, descripción, imagen y id_categoria")
+
         if privado:
-            password= generate_password_hash(request.form['password'])
+            password = request.form.get('password')
+
+            # Verificar que se proporcione una contraseña para servidores privados
+            if not password:
+                raise InvalidDataError("Contraseña faltante",
+                                       "Debes proporcionar una contraseña para servidores privados")
+
+            # Verificar que la contraseña cumple con los criterios (al menos 8 caracteres, un número y un carácter especial)
+            if not re.match(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", password):
+                raise InvalidDataError("Contraseña inválida",
+                                       "La contraseña debe tener al menos 8 caracteres, un número y un carácter especial")
+
         servidor= Servidor(nombre=nombre, descripcion=descripcion,imagen=filename,privado=privado,
                                 password=password,token=token,id_usuario_creador=id_usuario_creador,id_categoria=id_categoria )    
         Servidor.create_servidor(servidor)
@@ -33,29 +51,37 @@ class ServidorController:
         MiembroController.unirse_servidor(token)
         Canal.create_canal(Canal(nombre='General',id_servidor=serv_creado.id))
         return jsonify({'message':'Servidor creado con exito'}, 200)
-    
+
     @classmethod
     def get_servidores_publicos(cls):
-        servidores= Servidor.get_servidores()
-        lista=[]
-        for servidor in servidores:
-            if not servidor.privado:
-                servidor_data= servidor.serialize()
-                servidor_data['imagen']= send_from_directory('media/servicios',servidor_data['imagen'])
-                lista.append(servidor_data)
+        servidores = Servidor.get_servidores()
+        lista = []
+
+        # Filtrar solo los servidores públicos
+        servidores_publicos = [servidor for servidor in servidores if not servidor.privado]
+
+        # Verificar si existen servidores públicos
+        if not servidores_publicos:
+            raise NotFound("No se encontraron servidores públicos", "No existen servidores públicos disponibles")
+
+        for servidor in servidores_publicos:
+            servidor_data = servidor.serialize()
+            servidor_data['imagen'] = send_from_directory('media/servicios', servidor_data['imagen'])
+            lista.append(servidor_data)
         return jsonify(lista, 200)
-    
+
     @classmethod
     def get_servidores_user(cls):
         servidores= Servidor.get_servidores_user(User(id=current_user.id))
         print(servidores)
-        if servidores:
+        if not servidores:
+            raise NotFound("No se encontraron servidores para el usuario", "El usuario no pertenece a ningún servidor")
             lista=[]
             for servidor in servidores:
                 servidor_data= servidor.serialize()
                 lista.append(servidor_data)
             return jsonify(lista,200)
-        return jsonify({'message':'No hay servidores'}, 404)
+
     
     @classmethod
     def get_all_servidores(cls):

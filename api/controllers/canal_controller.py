@@ -4,11 +4,15 @@ from api.models.mensaje_model import Mensaje
 from api.models.canal_model import Canal
 from werkzeug.security import generate_password_hash, check_password_hash
 from api.models.servidor_model import Servidor
+from api.models.exceptions import NotFound, InvalidDataError
 
 class CanalController:
     @classmethod
     def create_canal(cls, token_servidor):
         nombre= request.form['nombre']
+        if len(nombre) < 3 or len(nombre) > 10:
+            raise InvalidDataError("Nombre del canal inválido",
+                                   "El nombre del canal debe tener entre 3 y 10 caracteres")
         servidor= Servidor.get_servidor(Servidor(token=token_servidor))
         Canal.create_canal(Canal(nombre=nombre, id_servidor=servidor.id))
         return jsonify({'message':'Canal creado con exito'}, 200)
@@ -19,7 +23,7 @@ class CanalController:
         if canal:
             dic= canal.serialize()
             return jsonify(dic, 200)
-        return jsonify({'message':'No se ha encontrado canal'}, 401)
+        raise NotFound("canal no encontrado", "No se encontro el canal")
     
     @classmethod
     def get_canales_servidor(cls, token_servidor):
@@ -30,7 +34,8 @@ class CanalController:
             for canal in canales:
                 lista.append(canal.serialize())
             return jsonify(lista, 200)
-        return jsonify({'message':'No se obtuvieron canales'})
+        else:
+            raise NotFound("No se encontraron canales", "No se encontraron canales en el servidor")
     
     @classmethod
     def get_all_canales(cls):
