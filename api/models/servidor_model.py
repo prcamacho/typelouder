@@ -161,6 +161,25 @@ class Servidor:
         params= (servidor.token, servidor.id_usuario_creador,)
         conn.execute_query(query,params)
         
+    @classmethod
+    def get_servidores_categoria(cls,categoria):
+        query='''SELECT A.id, A.nombre, A.descripcion, A.imagen, A.fecha_creacion, A.privado, 
+                A.password, A.token, A.id_usuario_creador, A.id_categoria, COALESCE(COUNT(B.id_usuario), 0) AS usuarios_servidor
+                FROM typelouder.servidores A 
+                LEFT JOIN typelouder.miembros B ON A.id = B.id_servidor
+                WHERE id_categoria = %s
+                GROUP BY A.id, A.nombre, A.descripcion, A.imagen, A.fecha_creacion, A.privado, 
+                A.password, A.token, A.id_usuario_creador, A.id_categoria;'''
+        params= (categoria.id,)
+        results = conn.fetch_all(query,params)
+        if results is not None:
+            lista_servidores=[]
+            for result in results:
+                lista_servidores.append([Servidor(id=result[0], nombre=result[1], descripcion=result[2],
+                            imagen=result[3], fecha_creacion=result[4], privado=result[5], password=result[6],
+                            token=result[7], id_usuario_creador=result[8], id_categoria=result[9]),result[10]])
+            return lista_servidores    
+        return None    
 
 
 

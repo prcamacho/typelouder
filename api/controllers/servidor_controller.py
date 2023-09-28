@@ -14,6 +14,7 @@ import math
 from api.models.exceptions import NotFound, InvalidDataError
 import re
 
+from api.models.categoria_model import Categoria
 
 class ServidorController:
     @classmethod
@@ -108,6 +109,21 @@ class ServidorController:
                 lista.append([servidor[0].serialize(),servidor[1]])
             return jsonify(lista, 200)
         return jsonify({'message':'No hay servidores'})
+     
+    @classmethod
+    def get_servidores_categorias(cls,id_categoria):
+        pagina = int(request.args.get('pagina', 1))
+        elementos_pagina = 11
+        inicio = (pagina - 1) * elementos_pagina
+        fin = inicio + elementos_pagina
+        categoria = Categoria.get_categoria(Categoria(id=id_categoria))
+        servidores= Servidor.get_servidores_categoria(categoria)
+        lista=[]
+        if servidores is not None:
+            for servidor in servidores:
+                lista.append([servidor[0].serialize(),servidor[1]]) 
+            return jsonify(lista[inicio:fin],math.ceil(len(lista)/elementos_pagina), 200)
+        return jsonify({'message':'No hay servidores'}) 
         
     
     @classmethod
