@@ -10,7 +10,8 @@ from config import Config
 from flask_login import login_required
 from flask_cors import CORS
 
-    
+
+   
 typelouder = Flask(__name__, static_folder=Config.STATIC_FOLDER, template_folder=Config.TEMPLATE_FOLDER)
 CORS(typelouder, supports_credentials=True)
 #cors = CORS(typelouder, resources={r"/api/*": {"origins": "http://127.0.0.1:5500"}})
@@ -33,16 +34,9 @@ typelouder.register_blueprint(app_miembro)
 typelouder.register_blueprint(app_media)
 typelouder.register_blueprint(app_categoria)
 
-# def after_request(response):
-#     response.headers.add('Access-Control-Allow-Origin', 'http://localhost:8000')  # Reemplaza 'http://tudominio.com' con el origen de tu aplicación
-#     response.headers.add('Access-Control-Allow-Methods', 'PUT, OPTIONS')  # Permite PUT y OPTIONS
-#     response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
-#     return response
 
-@typelouder.route('/')
-@login_required
-def home():
-    return render_template('home/index.html')
+
+
 
     
 

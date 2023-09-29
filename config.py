@@ -1,5 +1,9 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 class Config:
-    SERVER_NAME= "localhost:6000"
     DEBUG= True
     TEMPLATE_FOLDER= '../templates/'
     STATIC_FOLDER= 'static'
@@ -9,18 +13,18 @@ class Config:
     
     PORT=8000
     
-    CREDENCIALES_DB = {'user': 'root',
-                'password': 'Cafayate123',
-                'host': 'localhost',
-                'database': 'typelouder',
-                'port':'3306'}   
+    CREDENCIALES_DB = {'user': os.getenv("database_user"),
+                'password': os.getenv("database_password"),
+                'host': os.getenv("database_host"),
+                'database': os.getenv("database_name"),
+                'port':os.getenv("database_port")}   
     
-    SECRET_KEY='75958d0dea3aaaf05db37d404e788ff3faaabc733af0560f5f05552a7f6b25de'
+    SECRET_KEY = os.getenv("secret_key")
     
     CREDENCIALES_EMAIL={
-    'email_host':"smtp.gmail.com",
-    'email_use_tls':True,
-    'email_port':587,
-    'email_host_user':'byte.force.devs@gmail.com',
-    'email_host_password':'noektdyllpwgjdzv'
+    'email_host':os.getenv('email_host'),
+    'email_use_tls':os.getenv('email_use_tls'),
+    'email_port':os.getenv('email_port'),
+    'email_host_user':os.getenv('email_host_user'),
+    'email_host_password':os.getenv('email_host_password')
     }
